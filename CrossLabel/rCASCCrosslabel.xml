@@ -10,7 +10,7 @@
 
 
 
-	Rscript $__tool_directory__/mainCustom.R $MatrixName $NCluster $Format $Separator $NewName 2>$log &&
+	Rscript $__tool_directory__/MainCustom.R $MatrixName $NCluster $Format $Separator $NewName 2>$log &&
 	
 	tar cvzf crosslabel.tar.gz * 2>>$log
  
