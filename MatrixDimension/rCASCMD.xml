@@ -7,7 +7,7 @@
  <![CDATA[
 	cp $MatrixName ./MatrixName.csv  &&
 
-	Rscript $__tool_directory__/DIM.R MatrixName  csv $separator 2>$log  
+	Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator 2>$log  
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />
