@@ -1,0 +1,22 @@
+<tool id="rCASCDim" name="matrix dimensions (in docker)">
+    <description>dim</description>
+    <requirements>
+	<container type="docker">repbioinfo/r332.2017.01</container>
+    </requirements>
+    <command>
+ <![CDATA[
+	cp $MatrixName ./MatrixName.csv  &&
+
+	Rscript $__tool_directory__/DIM.R MatrixName  csv $separator 2>$log  
+  ]]> </command>
+    <inputs>
+	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />
+	<param name="separator" value="," type="text"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="csv" from_work_dir="dimensions.txt"/>
+        <data name="log" format="txt" label="logfile"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
