@@ -5,7 +5,7 @@
     </requirements>
     <command>
  <![CDATA[
-	cp $MatrixName ./MatrixName.csv  &&
+	ln -s $MatrixName ./MatrixName.csv  &&
 
 	Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator 2>$log  
   ]]> </command>
