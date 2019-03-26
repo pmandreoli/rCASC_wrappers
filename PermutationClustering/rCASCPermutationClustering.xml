@@ -1,20 +1,24 @@
 <tool id="PermutationClustering" name="PermutationClustering (in docker)">
     <description>PermutationClustering function</description>
     <requirements>
-	<container type="docker">rcaloger/permutationclustering</container>
+<!--	<container type="docker">rcaloger/permutationclustering</container>-->
     </requirements>
     <command>
  <![CDATA[
-	cp $MatrixName ./annotated_lorenz_testSCumi_mm10.csv &&
-	cp /home/permutation.R . && cp /home/functions.R . &&	
-
-	Rscript $__tool_directory__/MainCustom.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 2>$log &&
+	##uncomment for test with annotated_lorenz_testSCumi_mm10.csv
+	##ln -s $MatrixName ./annotated_lorenz_testSCumi_mm10.csv &&
+	##Rscript $__tool_directory__/main.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 2>$log &&
 	
-	tar cvzf PermutationClustering.tar.gz /data/scratch/* 2>>$log
+	ln -s $MatrixName ${NameMatrix}.csv && 
+	
+	Rscript $__tool_directory__/main.R ${NameMatrix} $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
+	
+	##tar cvzf PermutationClustering.tar.gz /data/scratch/* 2>>$log
  
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv" type="data"/>
+	<param  name="NameMatrix" label="inputMatrixname" type="text"/>
 	<!--<param name="MatrixName" value="annotated_lorenz_testSCumi_mm10" type="text"/>
 	<param name="NCluster" value="4" type="text"/>
 	<param name="Format" value="csv" type="text"/>
