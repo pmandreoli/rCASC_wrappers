@@ -16,12 +16,12 @@
  
   ]]> </command>
     <inputs>
-	<param format="tar" name="tarFile" label="input tar folder" type="data" optional="true" />
-	<param name="MatrixName" value="annotated_lorenz_testSCumi_mm10" type="text"/>
-	<param name="NCluster" value="4" type="text"/>
-	<param name="Format" value="csv" type="text"/>
-	<param name="Separator" value="," type="text"/>
-	<param name="NewName" value="crosslabel" type="text"/>
+	<param format="tar" name="tarFile" label="input tar folder" type="data" optional="true"  help="tar folder output of ..."/>
+	<param name="MatrixName" value="annotated_lorenz_testSCumi_mm10" type="text" help="name of the matrix without extension"/>
+	<param name="NCluster" value="4" type="integer" help="number of interested cluster used for analysis"/>
+	<param name="Format" value="csv" type="text" help="matrix format " />
+	<param name="Separator" value="," type="text" help="separator used in count file, e.g. '\\t', ','"/>
+	<param name="NewName" value="crosslabel" type="text" help="new name of the matrix"/>
     </inputs>
     <outputs>
         <data name="log" format="txt" label="logfile"/>
@@ -30,3 +30,4 @@
     <help>
     </help>
 </tool>
+
