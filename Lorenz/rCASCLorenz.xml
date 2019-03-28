@@ -8,11 +8,12 @@
 	
 	ln -s $MatrixName MatrixName && 
 
-	Rscript $__tool_directory__/MainCustom.R MatrixName $p_value csv $separator 2>$log 
+	Rscript $__tool_directory__/MainCustom.R MatrixName $p_value $Format $separator 2>$log 
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />
 	<param name="p_value" value="0.05" type="float"/>
+	<param name="Format" value="csv" type="text"/>
 	<param name="separator" value="," type="text"/>
     </inputs>
     <outputs>

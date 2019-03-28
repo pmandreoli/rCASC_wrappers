@@ -30,15 +30,15 @@ if(separator=="tab"){separator="\t"}
 
 #mainMatrix=read.table(gsub(" ","",paste("./../data/",matrixName,".",format)),header=TRUE,sep=separator,stringsAsFactors=F,row.names=1)
 #cambiato path read.table per l'input 'l'input si trova all'interno della WD,grazie a un collegamento ln -s dal database alla WD
-mainMatrix=read.table(gsub(" ","",paste("/data/",matrixName,".",format)),header=TRUE,sep=separator,stringsAsFactors=F,row.names=1)
+mainMatrix=read.table(gsub(" ","",paste("/scratch/",matrixName,".",format)),header=TRUE,sep=separator,stringsAsFactors=F,row.names=1)
 mainMatrix=mainMatrix[,passVector]
 #mainMatrix=log10(mainMatrix+1)
 #write.table(mainMatrix,paste("./../data/lorenz_",matrixName,".",format,sep=""),sep=separator,col.names=NA)
 #camnbiato il path dell'outup per redirigerlo nella cartella attuale
-write.table(mainMatrix,paste("/data/lorenz_",matrixName,".",format,sep=""),sep=separator,col.names=NA)
+write.table(mainMatrix,paste("/scratch/lorenz_",matrixName,".",format,sep=""),sep=separator,col.names=NA)
 }else{
 #write("Dataset not strong enaugh \n unable to complete fdr algorithm ",paste("./../data/lorenz_",matrixName,"_ERROR.txt",sep=""))
-write("Dataset not strong enaugh \n unable to complete fdr algorithm ",paste("./../data/lorenz_",matrixName,"_ERROR.txt",sep=""))
+write("Dataset not strong enaugh \n unable to complete fdr algorithm ",paste("/scratch/lorenz_",matrixName,"_ERROR.txt",sep=""))
 
 }
 #eliminazione non eseguita poichè la working dir verrà automaticamente eliminata dal sistema quando il job avrà finito
