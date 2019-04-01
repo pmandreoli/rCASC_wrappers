@@ -9,11 +9,18 @@
 	<handler id="handler2" tags="handlers"/>
         <handler id="handler3" tags="handlers"/>
     </handlers>
-    <destinations>
-        <destination id="docker_local" runner="local">
-                <param id="docker_enabled">true</param>
-		<param id="docker_set_user">root</param>
-        </destination>
+<!-- prima di modifica docker era <destinations>-->
+    <destinations default="docker_local">
+        <destination id="local" runner="local">
+		<param id="local_slots">2</param>
+	</destination>
+<!-- parte aggiunta per docker-->
+       <destination id="docker_local" runner="local">
+         <param id="docker_enabled">true</param>
+<!--prova root user-->
+	<param id="docker_set_user">root</param>
+	</destination>
+<!--fine modifica per docker-->
     </destinations>
     <limits>
 	<limit type="registered_user_concurrent_jobs">4</limit>
