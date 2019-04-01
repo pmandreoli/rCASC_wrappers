@@ -1,6 +1,6 @@
  
 # etwd("./home")
- 
+setwd("/home") 
  library("argparser")
 p <- arg_parser("permutation")
 p <- add_argument(p, "matrixName", help="matrix count name")
