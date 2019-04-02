@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<job_conf>
+    <plugins>
+        <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="2"/>
+    </plugins>
+    <handlers default="handlers">
+	<handler id="handler0" tags="handlers"/>	
+	<handler id="handler1" tags="handlers"/>
+	<handler id="handler2" tags="handlers"/>
+        <handler id="handler3" tags="handlers"/>
+    </handlers>
+    <destinations default="docker_dispatch" >
+        <destination id="local" runner="local">
+		<param id="local_slots">2</param>
+         	<param id="docker_enabled">false</param>
+ 	</destination>
+        <destination id="docker_local" runner="local">
+	 	<param id="local_slots">2</param>
+         	<param id="docker_enabled">true</param>
+        	<param id="docker_set_user">root</param>
+ 	</destination>
+	<destination id="docker_dispatch" runner="dynamic">
+            <param id="type">docker_dispatch</param>
+            <param id="docker_destination_id">docker_local</param>
+            <param id="default_destination_id">local</param>
+	</destination>
+    </destinations>
+    <limits>
+	<limit type="registered_user_concurrent_jobs">2</limit>
+        <limit type="unregistered_user_concurrent_jobs">0</limit>
+	<limit type="job_walltime">72:00:00</limit>
+       	<limit type="output_size">268435456000</limit> 
+    </limits>
+</job_conf>
+
