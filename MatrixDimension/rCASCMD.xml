@@ -5,12 +5,15 @@
     </requirements>
     <command>
  <![CDATA[
-	WorkingDir=\$(pwd) &&
-	ln -s  $MatrixName /home/MatrixName.csv  &&
+###	WorkingDir=\$(pwd) &&
+	ln -s /data/scratch . &&
+	
+	ln -s  ${MatrixName} scratch/MatrixName.csv  &&
 
 	###Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator 2>$log  &&
-	Rscript /home/main.R MatrixName  csv $separator 2>$log  &&
-	ln -s dimensions.txt \${WorkingDir}/dimensions.txt 2>>$log
+	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator 2>$log  &&
+	mv scratch/dimensions.txt .
+
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />
