@@ -1,4 +1,4 @@
-#per GA modificata linea 177 
+ 
 
  euc.dist = function(x1, x2) sqrt(sum((x1 - x2) ^ 2))
  #//////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ foo=cbind(rank$aggR,rank$pval)
 foo=foo[order(foo[,1]),]
 rownames(foo)=rownames(matrixCount)
 foo=foo[,-1]
-write.table(foo,paste("./Permutation/pvalue/",index,".",format,sep=""),sep=separator,col.names=FALSE)
+write.table(foo,paste("/scratch/Permutation/pvalue/",index,".",format,sep=""),sep=separator,col.names=FALSE)
 
 return(cbind(CellName=colnames(matrixCount),Belonging_Cluster=cluster_result$y$cluster,xChoord=cluster_result$ydata[,1],yChoord=cluster_result$ydata[,2]))
 }
@@ -139,7 +139,7 @@ if(separator=="tab"){separator2="\t"}else{separator2=separator} #BUG CORRECTION 
 
 switch(clusteringMethod, 
 SIMLR={
-countMatrix=read.table(paste("./../",matrixName,".",format,sep=""),sep=separator2,header=TRUE,row.name=1)
+countMatrix=read.table(paste("/scratch/",matrixName,".",format,sep=""),sep=separator2,header=TRUE,row.name=1)
 if(logTen==0){countMatrix=log10(countMatrix+1)}
 clustering.output=simlrF(countMatrix,nCluster)
 clustering.output=silhouette(nCluster,clustering.output)
@@ -151,18 +151,18 @@ clustering.output=silhouette(nCluster,clustering.output)
 
 },
 griph={
-countMatrix=read.table(paste("./",matrixName,".",format,sep=""),sep=separator2,header=TRUE,row.name=1)
+countMatrix=read.table(paste("/scratch/",matrixName,".",format,sep=""),sep=separator2,header=TRUE,row.name=1)
 if(logTen==0){countMatrix=log10(countMatrix+1)}
 clustering.output=griphF(countMatrix)
 clustering.output=silhouette(nCluster,clustering.output)
 nCluster=max(clustering.output[,2])
-dir.create(paste("./",nCluster,sep=""))
-dir.create(paste("./",nCluster,"/Permutation",sep=""))
+dir.create(paste("/scratch/",nCluster,sep=""))
+dir.create(paste("/scratch/",nCluster,"/Permutation",sep=""))
 
-setwd(paste("./",nCluster,sep=""))
+setwd(paste("/scratch/",nCluster,sep=""))
 },
 tSne={
-countMatrix=read.table(paste("./../",matrixName,".",format,sep=""),sep=separator2,header=TRUE,row.name=1)
+countMatrix=read.table(paste("/scratch/",matrixName,".",format,sep=""),sep=separator2,header=TRUE,row.name=1)
 if(logTen==0){countMatrix=log10(countMatrix+1)}
 clustering.output=tsneF(countMatrix,nCluster,perplexity)
 clustering.output=silhouette(nCluster,clustering.output)
@@ -174,11 +174,11 @@ cycles=nPerm/permAtTime
 for(i in 1:cycles){
     system(paste("for X in $(seq ",permAtTime,")
 do
- nohup Rscript ./../permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," $(($X +",(i-1)*permAtTime," )) & 
+ nohup Rscript /home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," $(($X +",(i-1)*permAtTime," )) & 
 
 done"))
 d=1
-while(length(list.files("./Permutation",pattern=paste("*.",format,sep="")))!=i*permAtTime*2){
+while(length(list.files("/scratch/Permutation",pattern=paste("*.",format,sep="")))!=i*permAtTime*2){
 if(d==1){cat(paste("Cluster number ",nCluster," ",((permAtTime*i))/nPerm*100," % complete \n"))}
 d=2
 }
@@ -192,10 +192,10 @@ gc()
 #write.table(as.matrix(sapply(list.files("./Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]}),col.names=1),paste(matrixName,"_",nCluster,"_clusterP.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
 #write.table(as.matrix(sapply(list.files("./Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]}),col.names=1),paste(matrixName,"_",nCluster,"_killedCell.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
 
-cluster_p=sapply(list.files("./Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
-killedC=sapply(list.files("./Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
+cluster_p=sapply(list.files("/scratch/Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("/scratch/Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
+killedC=sapply(list.files("/scratch/Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("/scratch/Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
 if(rK==1){
-pval=sapply(list.files("./Permutation/pvalue/",pattern="*"),FUN=function(x){a=read.table(paste("./Permutation/pvalue/",x,sep=""),header=FALSE,row.names=1,sep=separator2)[[1]]})
+pval=sapply(list.files("/scratch/Permutation/pvalue/",pattern="*"),FUN=function(x){a=read.table(paste("/scratch/Permutation/pvalue/",x,sep=""),header=FALSE,row.names=1,sep=separator2)[[1]]})
 }
 write.table(as.matrix(cluster_p,col.names=1),paste(matrixName,"_",nCluster,"_clusterP.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
 write.table(as.matrix(killedC,col.names=1),paste(matrixName,"_",nCluster,"_killedCell.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
@@ -247,9 +247,7 @@ if(separator=="tab"){separator="\t"} #BUG CORRECTION TAB PROBLEM
 count=1
 l=list()
 for(i in rangeVector){
-#GA
-#l[[count]]=read.table(paste("./",i,"/",matrixName,"_clustering.output.",format,sep=""),sep=separator,header=TRUE)[,8]
-l[[count]]=read.table(paste("./../",nCluster,"/",matrixName,"_clustering.output.",format,sep=""),sep=separator,header=TRUE)[,8]
+l[[count]]=read.table(paste("/scratch/",i,"/",matrixName,"_clustering.output.",format,sep=""),sep=separator,header=TRUE)[,8]
 count=count+1
 }
 pdf(paste(matrixName,"_vioplot.pdf",sep=""))
