@@ -1,5 +1,5 @@
 library("argparser")
-setwd("./../scratch/")
+setwd("/scratch/")
 system("chmod -R 777 .")
 system("cp ./../home/SCELL/* .")
 
