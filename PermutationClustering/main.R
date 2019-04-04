@@ -1,5 +1,5 @@
  
- setwd("./home")
+ setwd("/home")
  
 source("functions.R")
  library("SIMLR")
