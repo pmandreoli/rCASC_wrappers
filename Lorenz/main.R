@@ -14,6 +14,8 @@ matrixName=argv$matrixName
 p_value=argv$p_value
 format=argv$format
 separator=argv$separator
+if(separator=="tab"){separator="\t"}
+
  write.csv(read.table(paste("/scratch/",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1),paste("/scratch/set1.csv",sep=""))
 error=system("./run_normalize_samples2.sh /opt/mcr/v90/")
 if(error==0){
@@ -22,7 +24,6 @@ lorenz=read.csv("ciao.csv",header=FALSE)
 passVector=which(lorenz>=p_value)
 system("rm ciao.csv")
 system("rm set1.csv")
-if(separator=="tab"){separator="\t"}
 
 mainMatrix=read.table(gsub(" ","",paste("./../data/",matrixName,".",format)),header=TRUE,sep=separator,stringsAsFactors=F,row.names=1)
 mainMatrix=mainMatrix[,passVector]
