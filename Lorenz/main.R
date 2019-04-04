@@ -14,6 +14,7 @@ matrixName=argv$matrixName
 p_value=argv$p_value
 format=argv$format
 separator=argv$separator
+ write.csv(read.table(paste("/scratch/",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1),paste("/scratch/set1.csv",sep=""))
 error=system("./run_normalize_samples2.sh /opt/mcr/v90/")
 if(error==0){
 while(length(which(list.files()=="ciao.csv"))==0){}
