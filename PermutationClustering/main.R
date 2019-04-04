@@ -62,6 +62,9 @@ rK=as.numeric(argv$rK)
 set.seed(seed)
 
 dir.create(paste("./../scratch/",matrixName,sep=""))
+#ADDED SOFT LINK 
+system(paste("ln -s /scratch/",matrixName,".",format," /scratch/",matrixName,"/",matrixName,".",format,sep="")
+)
 nCluster=4
  
  if(clusteringMethod == "SIMLR" || clusteringMethod == "tSne"){
