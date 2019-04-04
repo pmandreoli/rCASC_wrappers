@@ -25,12 +25,12 @@ passVector=which(lorenz>=p_value)
 system("rm ciao.csv")
 system("rm set1.csv")
 
-mainMatrix=read.table(gsub(" ","",paste("./../data/",matrixName,".",format)),header=TRUE,sep=separator,stringsAsFactors=F,row.names=1)
+mainMatrix=read.table(gsub(" ","",paste("/scratch/",matrixName,".",format)),header=TRUE,sep=separator,stringsAsFactors=F,row.names=1)
 mainMatrix=mainMatrix[,passVector]
 #mainMatrix=log10(mainMatrix+1)
-write.table(mainMatrix,paste("./../data/lorenz_",matrixName,".",format,sep=""),sep=separator,col.names=NA)
+write.table(mainMatrix,paste("/scratch/lorenz_",matrixName,".",format,sep=""),sep=separator,col.names=NA)
 }else{
-write("Dataset not strong enaugh \n unable to complete fdr algorithm ",paste("./../data/lorenz_",matrixName,"_ERROR.txt",sep=""))
+write("Dataset not strong enaugh \n unable to complete fdr algorithm ",paste("/scratch/lorenz_",matrixName,"_ERROR.txt",sep=""))
 
 }
 system("rm mccExcludedFiles.log")
