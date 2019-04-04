@@ -1,5 +1,5 @@
  
- setwd("/home")
+ setwd("./home")
  
 source("functions.R")
  library("SIMLR")
@@ -61,52 +61,52 @@ rK=as.numeric(argv$rK)
 
 set.seed(seed)
 
-dir.create(paste("/scratch/",matrixName,sep=""))
+dir.create(paste("./../scratch/",matrixName,sep=""))
 nCluster=4
  
  if(clusteringMethod == "SIMLR" || clusteringMethod == "tSne"){
  rangeVector=seq(as.numeric(argv$range1),as.numeric(argv$range2))
 
 for(nCluster in rangeVector){
-  dir.create(paste("/scratch/",matrixName,"/",nCluster,sep=""))
-    dir.create(paste("/scratch/",matrixName,"/",nCluster,"/Permutation",sep=""))
-        dir.create(paste("/scratch/",matrixName,"/",nCluster,"/Permutation/pvalue",sep=""))
+  dir.create(paste("./../scratch/",matrixName,"/",nCluster,sep=""))
+    dir.create(paste("./../scratch/",matrixName,"/",nCluster,"/Permutation",sep=""))
+        dir.create(paste("./../scratch/",matrixName,"/",nCluster,"/Permutation/pvalue",sep=""))
 
-  setwd(paste("/scratch/",matrixName,"/",nCluster,sep=""))
+  setwd(paste("./../scratch/",matrixName,"/",nCluster,sep=""))
 clustering(matrixName,nPerm,permAtTime,percent,nCluster,logTen,format,separator,clusteringMethod,perplexity,rK)
-setwd("/home")
+setwd("./../../../home")
  
 }
- setwd(paste("/scratch/",matrixName,"/",sep=""))
+ setwd(paste("./../scratch/",matrixName,"/",sep=""))
   silhouettePlot(matrixName,rangeVector,format,separator)
-  #dir.create("/scratchdata/Results")
-#system("cp -r /scratch/scratchdata/Results")
-setwd("/scratch")
+  #dir.create("./../../data/Results")
+#system("cp -r ./../* ./../../data/Results")
+setwd("./../..")
 #system("rm -r ./scratch/*")
 
 
 }else{
     if(!is.null(argv$range1)){cat(paste("\nWARNING: range1 with ",clusteringMethod," is suppose to be null\n"))}
   if(!is.null(argv$range2)){cat(paste("\nWARNING:range2 with ",clusteringMethod," is suppose to be null\n"))}
-  setwd(paste("/scratch/",matrixName,"/",sep=""))
+  setwd(paste("./../scratch/",matrixName,"/",sep=""))
 nCluster=clustering(matrixName,nPerm,permAtTime,percent,nCluster=0,logTen,format,separator,clusteringMethod,perplexity,rK)
 system("rm Lvis_*")
-system("rm /scratch/Lvis*")
+system("rm ./../Lvis*")
 
-setwd("/home")
-  setwd(paste("/scratch/",matrixName,"/",sep=""))
+setwd("./../../../home")
+  setwd(paste("./../scratch/",matrixName,"/",sep=""))
   silhouettePlot(matrixName,nCluster,format,separator)
 
   
-#dir.create("/scratchdata/Results")
+#dir.create("./../../data/Results")
 
-#system("cp -r /scratch/scratchdata/Results")
-setwd("/scratch")
+#system("cp -r ./../* ./../../data/Results")
+setwd("./../..")
 #system("rm -r ./scratch/*")
 
 
 
 }
 
-#system("chmod -R 777 ./scratch") 
-#system("chmod -R 777 ./data")
+system("chmod -R 777 ./scratch") 
+system("chmod -R 777 ./data")

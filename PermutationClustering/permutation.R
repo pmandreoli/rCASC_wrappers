@@ -29,10 +29,10 @@ nCluster=as.numeric(argv$nCluster)
 index=argv$index
 perplexity=as.numeric(argv$perplexity)
 rK=argv$rK
- source("/home/functions.R")
+ source("./../../../home/functions.R")
 if(separator=="tab"){separator="\t"} #BUG CORRECTION TAB separator PROBLEM 
 
-countMatrix=as.matrix(read.table(paste("/scratch/",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1))
+countMatrix=as.matrix(read.table(paste("./../",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1))
 killedCell=sample(ncol(countMatrix),(ncol(countMatrix)*percent/100))
 countMatrix=countMatrix[,-killedCell]
 
@@ -44,7 +44,7 @@ if(rK==1){
  tt=try(simlrF2(countMatrix,nCluster,index))
  }else{ tt=try(simlrF(countMatrix,nCluster))}
  if(class(tt)=="try-error"){
-  system(paste("nohup Rscript /home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," ",index," & ",sep=""))
+  system(paste("nohup Rscript ./../../../home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," ",index," & ",sep=""))
 
 
  }else{
@@ -56,7 +56,7 @@ griph={
 
  tt=try(griphF(countMatrix))
  if(class(tt)=="try-error"){
-  system(paste("nohup Rscript /home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," ",index," & ",sep=""))
+  system(paste("nohup Rscript ./../../../home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," ",index," & ",sep=""))
 
 
  }else{
@@ -74,7 +74,7 @@ tSne={
 
  tt=try(tsneF(countMatrix,nCluster,perplexity))
  if(class(tt)=="try-error"){
-  system(paste("nohup Rscript /home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," ",index," & ",sep=""))
+  system(paste("nohup Rscript ./../../../home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," ",index," & ",sep=""))
 
 
  }else{
@@ -87,11 +87,11 @@ tSne={
 
 rel.matrix=relationMatrix(as.numeric(clustering.output[,2]),clustering.output[,1])
 
-write.table(clustering.output[,2],paste("/scratch/Permutation/clusterB_",index,".",format,sep=""),sep=separator)
+write.table(clustering.output[,2],paste("./Permutation/clusterB_",index,".",format,sep=""),sep=separator)
 
-write.table(killedCell,paste("/scratch/Permutation/killC_",index,".",format,sep=""),sep=separator)
+write.table(killedCell,paste("./Permutation/killC_",index,".",format,sep=""),sep=separator)
 rm(list=setdiff(ls(),"index"))
-dir.create("/scratch/memory")
+dir.create("./memory")
 system(paste("cat /proc/meminfo >  ./memory/",index,".txt",sep=""))
 
 
