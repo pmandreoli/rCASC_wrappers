@@ -5,7 +5,7 @@
     </requirements>
     <command>
  <![CDATA[
-	tar -zxvf $TarFile  $>>$log ;
+	tar -zxvf $TarFile  &&
 	mv scratch/* /scratch/ 2>>$log &&
 
 
