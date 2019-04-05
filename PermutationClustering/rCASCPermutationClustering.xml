@@ -16,7 +16,7 @@
 	ln -s $__tool_directory__/main.R /home &&	
 	Rscript /home/main.R ${NameMatrix} $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
 	
-	tar cvzf PermutationClustering.tar.gz /scratch . 2>>$log
+	tar cvzf PermutationClustering.tar.gz /scratch  2>>$log
 
 
 
