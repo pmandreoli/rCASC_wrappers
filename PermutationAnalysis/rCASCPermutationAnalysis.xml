@@ -12,7 +12,6 @@
 	Rscript $__tool_directory__/main.R $NameMatrix $Range1 $Range2 $Format $Separator $Sp $ClusterPermErr $MaxDeltaConfidence $MinLogMean 2>>$log && 
 
 
-###	permAnalysis(group=group, scratch.folder=scratch.folder, file=file,range1=3,range2=4,separator=",",sp=0.8,clusterPermErr=0.05,maxDeltaConfidence=0.5,minLogMean=60)
 	tar cvzf PermutationAnalysis.tar.gz /scratch  2>>$log
 
 
