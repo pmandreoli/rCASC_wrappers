@@ -6,9 +6,10 @@
     <command>
  <![CDATA[
 	
-	ln -s $MatrixName MatrixName && 
+	ln -s $MatrixName /scratch/MatrixName.${Format} && 
 
-	Rscript $__tool_directory__/MainCustom.R MatrixName $p_value $Format $separator 2>$log 
+	Rscript $__tool_directory__/main.R MatrixName $p_value $Format $separator 2>$log &&
+	cp /scratch/lorenz_MatrixName.${Format} .
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />

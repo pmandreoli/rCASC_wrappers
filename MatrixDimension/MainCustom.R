@@ -1,6 +1,6 @@
  
 # etwd("./home")
- 
+setwd("/home") 
  library("argparser")
 p <- arg_parser("permutation")
 p <- add_argument(p, "matrixName", help="matrix count name")
@@ -13,5 +13,5 @@ matrixName=argv$matrixName
 format=argv$format
 separator=argv$separator
 if(separator=="tab"){separator2="\t"}else{separator2=separator} #BUG CORRECTION TAB PROBLEM 
-#setwd("./../scratch")
+setwd("/data/scratch")
 write.table(dim(read.table(paste(matrixName,".",format,sep=""),header=TRUE,row.names=1,sep=separator2)),"dimensions.txt")

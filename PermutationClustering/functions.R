@@ -1,4 +1,4 @@
-#per GA modificata linea 177 
+ 
 
  euc.dist = function(x1, x2) sqrt(sum((x1 - x2) ^ 2))
  #//////////////////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ cycles=nPerm/permAtTime
 for(i in 1:cycles){
     system(paste("for X in $(seq ",permAtTime,")
 do
- nohup Rscript ./../permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," $(($X +",(i-1)*permAtTime," )) & 
+ nohup Rscript ./../../../home/permutation.R ",percent," ",matrixName," ",format," ",separator," ",logTen," ",clusteringMethod," ",nCluster," ",rK," ",perplexity," $(($X +",(i-1)*permAtTime," )) & 
 
 done"))
 d=1
@@ -247,9 +247,7 @@ if(separator=="tab"){separator="\t"} #BUG CORRECTION TAB PROBLEM
 count=1
 l=list()
 for(i in rangeVector){
-#GA
-#l[[count]]=read.table(paste("./",i,"/",matrixName,"_clustering.output.",format,sep=""),sep=separator,header=TRUE)[,8]
-l[[count]]=read.table(paste("./../",nCluster,"/",matrixName,"_clustering.output.",format,sep=""),sep=separator,header=TRUE)[,8]
+l[[count]]=read.table(paste("./",i,"/",matrixName,"_clustering.output.",format,sep=""),sep=separator,header=TRUE)[,8]
 count=count+1
 }
 pdf(paste(matrixName,"_vioplot.pdf",sep=""))

@@ -1,5 +1,5 @@
-#GA 
- #setwd("/home")
+ 
+ setwd("/home")
  
 source("functions.R")
  library("SIMLR")
@@ -60,74 +60,56 @@ seed=as.numeric(argv$seed)
 rK=as.numeric(argv$rK)
 
 set.seed(seed)
-#GA
-#dir.create(paste("./../scratch/",matrixName,sep=""))
-dir.create(paste("./",matrixName,sep=""))
+
+dir.create(paste("./../scratch/",matrixName,sep=""))
+#ADDED SOFT LINK 
+system(paste("ln -s /scratch/",matrixName,".",format," /scratch/",matrixName,"/",matrixName,".",format,sep="")
+)
 nCluster=4
  
  if(clusteringMethod == "SIMLR" || clusteringMethod == "tSne"){
  rangeVector=seq(as.numeric(argv$range1),as.numeric(argv$range2))
-#GA
-#for(nCluster in rangeVector){
-#  dir.create(paste("./../scratch/",matrixName,"/",nCluster,sep=""))
-#    dir.create(paste("./../scratch/",matrixName,"/",nCluster,"/Permutation",sep=""))
-#        dir.create(paste("./../scratch/",matrixName,"/",nCluster,"/Permutation/pvalue",sep=""))
 
 for(nCluster in rangeVector){
-  dir.create(paste("./",matrixName,"/",nCluster,sep=""))
-    dir.create(paste("./",matrixName,"/",nCluster,"/Permutation",sep=""))
-        dir.create(paste("./",matrixName,"/",nCluster,"/Permutation/pvalue",sep=""))
+  dir.create(paste("./../scratch/",matrixName,"/",nCluster,sep=""))
+    dir.create(paste("./../scratch/",matrixName,"/",nCluster,"/Permutation",sep=""))
+        dir.create(paste("./../scratch/",matrixName,"/",nCluster,"/Permutation/pvalue",sep=""))
 
-
-
-#GA
- # setwd(paste("./../scratch/",matrixName,"/",nCluster,sep=""))
-  setwd(paste("./",matrixName,"/",nCluster,sep=""))
+  setwd(paste("./../scratch/",matrixName,"/",nCluster,sep=""))
 clustering(matrixName,nPerm,permAtTime,percent,nCluster,logTen,format,separator,clusteringMethod,perplexity,rK)
-#GA
-#setwd("./../../../home")
-setwd("./../..")
+setwd("./../../../home")
  
 }
-#GA
-# setwd(paste("./../scratch/",matrixName,"/",sep=""))
- setwd(paste("./",matrixName,"/",sep=""))
+ setwd(paste("./../scratch/",matrixName,"/",sep=""))
   silhouettePlot(matrixName,rangeVector,format,separator)
   #dir.create("./../../data/Results")
 #system("cp -r ./../* ./../../data/Results")
-#GA
-#setwd("./../..")
-setwd("./..")
+setwd("./../..")
 #system("rm -r ./scratch/*")
 
 
 }else{
     if(!is.null(argv$range1)){cat(paste("\nWARNING: range1 with ",clusteringMethod," is suppose to be null\n"))}
   if(!is.null(argv$range2)){cat(paste("\nWARNING:range2 with ",clusteringMethod," is suppose to be null\n"))}
-#GA  
-#setwd(paste("./../scratch/",matrixName,"/",sep=""))
+  setwd(paste("./../scratch/",matrixName,"/",sep=""))
 nCluster=clustering(matrixName,nPerm,permAtTime,percent,nCluster=0,logTen,format,separator,clusteringMethod,perplexity,rK)
 system("rm Lvis_*")
-#GA
-#system("rm ./../Lvis*")
-system("rm ./Lvis*")
-#GA
-#setwd("./../../../home")
-#GA
- # setwd(paste("./../scratch/",matrixName,"/",sep=""))
+system("rm ./../Lvis*")
+
+setwd("./../../../home")
+  setwd(paste("./../scratch/",matrixName,"/",sep=""))
   silhouettePlot(matrixName,nCluster,format,separator)
 
   
 #dir.create("./../../data/Results")
 
 #system("cp -r ./../* ./../../data/Results")
-#GA
-#setwd("./../..")
+setwd("./../..")
 #system("rm -r ./scratch/*")
 
 
 
 }
-#GA
-#system("chmod -R 777 ./scratch") 
-#system("chmod -R 777 ./data")
+
+system("chmod -R 777 ./scratch") 
+system("chmod -R 777 ./data")
