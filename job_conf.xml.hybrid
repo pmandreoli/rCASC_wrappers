@@ -9,22 +9,20 @@
 	<handler id="handler2" tags="handlers"/>
         <handler id="handler3" tags="handlers"/>
     </handlers>
-    <destinations default="docker_dispatch" >
-        <destination id="local" runner="local">
-		<param id="local_slots">2</param>
-         	<param id="docker_enabled">false</param>
- 	</destination>
+	<destinations default="local" >
+        <destination id="local" runner="local"/>
+	 	<param id="local_slots">2</param>
         <destination id="docker_local" runner="local">
 	 	<param id="local_slots">2</param>
          	<param id="docker_enabled">true</param>
         	<param id="docker_set_user">root</param>
- 	</destination>
-	<destination id="docker_dispatch" runner="dynamic">
-            <param id="type">docker_dispatch</param>
-            <param id="docker_destination_id">docker_local</param>
-            <param id="default_destination_id">local</param>
 	</destination>
     </destinations>
+<tools>
+<!--specify all the tools that utilize docker as requirement-->
+        <tool id="PermutationAnalysis" destination="docker_local"/>
+    </tools>
+
     <limits>
 	<limit type="registered_user_concurrent_jobs">2</limit>
         <limit type="unregistered_user_concurrent_jobs">0</limit>
