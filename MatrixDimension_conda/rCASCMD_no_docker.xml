@@ -1,19 +1,21 @@
-<tool id="rCASCDim" name="matrix dimensions (in docker)">
+<tool id="MatrixDimensionNoDocker" name="matrix dimensions not in docker">
     <description>dim</description>
     <requirements>
 	<requirement type="package" >r-base</requirement>
+	<requirement type="package" >r-argparser</requirement>
     </requirements>
     <command>
  <![CDATA[
 	
-	ln -s  ${MatrixName} MatrixName.csv  &&
+	ln -s  ${MatrixName} MatrixName.${format}  &&
 
-	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator 2>$log 
+	Rscript  $__tool_directory__/main.R MatrixName $format $separator 2>$log 
 
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />
 	<param name="separator" value="," type="text"/>
+	<param name="format" value="csv" type="text"/>
     </inputs>
     <outputs>
         <data name="output" format="txt" from_work_dir="dimensions.txt"/>
