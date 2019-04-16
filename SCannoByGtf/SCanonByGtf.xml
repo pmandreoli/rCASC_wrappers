@@ -1,0 +1,39 @@
+<tool id="SCanonByGtf" name="SCanonByGtf (in docker)">
+    <description>SCanonByGtf</description>
+    <requirements>
+	<container type="docker">repbioinfo/r332.2017.01</container>
+    </requirements>
+    <command>
+ <![CDATA[
+	
+	ln -s $counts_table counts_table.${format} &&
+##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
+	Rscript  $__tool_directory__/scannoByGtf.R counts_table.${format} $gtf_file $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log 
+
+  ]]> </command>
+    <inputs>
+	<param format="csv" name="counts_table" label="input csv file" type="data" />
+	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
+	<param name="biotype" type="select"/>
+	<param name="mt" type="select">
+		<option value="FALSE">FALSE</option>
+		<option value="TRUE" selected="true">TRUE</option> 
+	</param>
+	<param name="ribo_proteins" type="select">
+		<option value="FALSE">FALSE</option>
+		<option value="TRUE" selected="true">TRUE</option> 
+	</param>
+	<param name="R1" value="0" type="integer"/>
+	<param name="R2" value="100" type="integer"/>
+	<param name="R3" value="0" type="integer"/>
+	<param name="R4" value="100" type="integer"/>
+	<param name="umiXgene" value="3" type="integer"/>
+	<param name="thresholdGenes" value="250" type="integer"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" from_work_dir=""/>
+        <data name="log" format="txt" label="logfile"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
