@@ -1,4 +1,4 @@
-<tool id="rCASCDocker" name="Lorenz filtering (in docker)">
+<tool id="Lorenz" name="Lorenz filtering (in docker)">
     <description>rCASC function</description>
     <requirements>
 	<container type="docker">rcaloger/lorenz</container>

@@ -1,18 +1,14 @@
-<tool id="MatrixDimension" name="matrix dimensions (in docker)">
+<tool id="rCASCDim" name="matrix dimensions (in docker)">
     <description>dim</description>
     <requirements>
-	<container type="docker">repbioinfo/r332.2017.01</container>
+	<requirement type="package" >r-base</requirement>
     </requirements>
     <command>
  <![CDATA[
-###	WorkingDir=\$(pwd) &&
-	ln -s /data/scratch . &&
 	
-	ln -s  ${MatrixName} scratch/MatrixName.csv  &&
+	ln -s  ${MatrixName} MatrixName.csv  &&
 
-	###Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator 2>$log  &&
-	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator 2>$log  &&
-	mv scratch/dimensions.txt .
+	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator 2>$log 
 
   ]]> </command>
     <inputs>

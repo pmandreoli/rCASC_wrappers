@@ -1,4 +1,4 @@
-<tool id="crosslabel" name="crossLabel (in docker)">
+<tool id="Crosslabel" name="crossLabel (in docker)">
     <description>crossLabel function</description>
     <requirements>
 	<container type="docker">rcaloger/crosslabel</container>
