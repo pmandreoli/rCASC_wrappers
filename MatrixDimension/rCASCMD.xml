@@ -5,19 +5,18 @@
     </requirements>
     <command>
  <![CDATA[
-###	WorkingDir=\$(pwd) &&
 	ln -s /data/scratch . &&
 	
-	ln -s  ${MatrixName} scratch/MatrixName.csv  &&
+	ln -s  ${MatrixName} scratch/MatrixName.${format}  &&
 
-	###Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator 2>$log  &&
-	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator 2>$log  &&
+	Rscript  $__tool_directory__/MainCustom.R MatrixName $format $separator 2>$log  &&
 	mv scratch/dimensions.txt .
 
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" label="input csv file" type="data" optional="true" />
 	<param name="separator" value="," type="text"/>
+	<param name="format" value="csv" type="text"/>
     </inputs>
     <outputs>
         <data name="output" format="txt" from_work_dir="dimensions.txt"/>
