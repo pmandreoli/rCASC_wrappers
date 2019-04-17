@@ -36,11 +36,11 @@
 	<param name="thresholdGenes" value="250" type="integer"/>
     </inputs>
     <outputs>
-        <data name="output" format="pdf" from_work_dir="counts_table_annotated_genes.pdf" label="pdf output"/>
-        <data name="output2" format="csv" from_work_dir="annotated_counts_table.csv" label="annotated csv"/>
-        <data name="output3" format="csv" from_work_dir="filtered_annotated_counts_table.csv" label="filtered annotated csv"/>
-        <data name="output4" format="txt" from_work_dir="filteredStatistics.txt" label="filtered statistic cvs"/>
-        <data name="log" format="txt" label="logfile"/>
+        <data name="output" format="pdf" from_work_dir="counts_table_annotated_genes.pdf" label="${tool.name} on ${on_string} : pdf output"   />
+        <data name="output2" format="csv" from_work_dir="annotated_counts_table.csv" label="${tool.name} on ${on_string} :annotated csv "/>
+        <data name="output3" format="csv" from_work_dir="filtered_annotated_counts_table.csv" label="${tool.name} on ${on_string} :filtered annotated csv"/>
+        <data name="output4" format="txt" from_work_dir="filteredStatistics.txt" label="${tool.name} on ${on_string} :filtered statistic cvs"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string} :logfile"/>
     </outputs>
     <help>
     </help>

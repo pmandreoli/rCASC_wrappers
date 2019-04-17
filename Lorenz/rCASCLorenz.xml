@@ -18,8 +18,8 @@
 	<param name="separator" value="," type="text"/>
     </inputs>
     <outputs>
-        <data name="output" format="csv" from_work_dir="lorenz_MatrixName.csv"/>
-        <data name="log" format="txt" label="logfile"/>
+        <data name="output" format="csv" from_work_dir="lorenz_MatrixName.csv" label="${tool.name} on ${on_string} :csv filtered"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string} :logfile"/>
     </outputs>
     <help>
     </help>
