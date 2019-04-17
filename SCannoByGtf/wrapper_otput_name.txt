@@ -1,6 +1,0 @@
-filteredStatistics.txt
-counts_table_annotated_genes.pdf
-filtered_annotated_counts_table.csv
-annotated_counts_table.csv
-file_gtf.gtf
-counts_table.csv
