@@ -3,18 +3,23 @@
     <requirements>
 	<container type="docker">repbioinfo/r332.2017.01</container>
     </requirements>
+      <macros>
+	<import>biotype.xml</import>
+      </macros>
     <command>
  <![CDATA[
 	
 	ln -s $counts_table counts_table.${format} &&
+	ln -s $gtf_file file_gtf.gtf &&
 ##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
-	Rscript  $__tool_directory__/scannoByGtf.R counts_table.${format} $gtf_file $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log 
+	Rscript  $__tool_directory__/scannoByGtf.R counts_table.${format} file_gtf.gtf $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log 
 
   ]]> </command>
     <inputs>
 	<param format="csv" name="counts_table" label="input csv file" type="data" />
 	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
-	<param name="biotype" type="select"/>
+	<param name="format" value="csv" type="text"/>
+	<expand macro="biotype_menu"/>
 	<param name="mt" type="select">
 		<option value="FALSE">FALSE</option>
 		<option value="TRUE" selected="true">TRUE</option> 
@@ -31,9 +36,14 @@
 	<param name="thresholdGenes" value="250" type="integer"/>
     </inputs>
     <outputs>
-        <data name="output" format="txt" from_work_dir=""/>
+        <data name="output" format="pdf" from_work_dir="counts_table_annotated_genes.pdf" label="pdf output"/>
+        <data name="output2" format="csv" from_work_dir="annotated_counts_table.csv" label="annotated csv"/>
+        <data name="output3" format="csv" from_work_dir="filtered_annotated_counts_table.csv" label="filtered annotated csv"/>
+        <data name="output4" format="txt" from_work_dir="filteredStatistics.txt" label="filtered statistic cvs"/>
         <data name="log" format="txt" label="logfile"/>
     </outputs>
     <help>
     </help>
 </tool>
+
+
