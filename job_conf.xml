@@ -9,21 +9,25 @@
 	<handler id="handler2" tags="handlers"/>
         <handler id="handler3" tags="handlers"/>
     </handlers>
-<!-- prima di modifica docker era <destinations>-->
-    <destinations default="docker_local">
-        <destination id="local" runner="local">
-		<param id="local_slots">2</param>
+	<destinations default="local" >
+        <destination id="local" runner="local"/>
+	 	<param id="local_slots">2</param>
+        <destination id="docker_local" runner="local">
+	 	<param id="local_slots">2</param>
+         	<param id="docker_enabled">true</param>
+        	<param id="docker_set_user">root</param>
 	</destination>
-<!-- parte aggiunta per docker-->
-       <destination id="docker_local" runner="local">
-         <param id="docker_enabled">true</param>
-<!--prova root user-->
-	<param id="docker_set_user">root</param>
-	</destination>
-<!--fine modifica per docker-->
     </destinations>
+<tools>
+        <tool id="PermutationAnalysis" destination="docker_local"/>
+        <tool id="PermutationClustering" destination="docker_local"/>
+        <tool id="Crosslabel" destination="docker_local"/>
+        <tool id="MatrixDimension" destination="docker_local"/>
+        <tool id="Lorenz" destination="docker_local"/>
+        <tool id="SCanonByGtf" destination="docker_local"/>
+    </tools>
     <limits>
-	<limit type="registered_user_concurrent_jobs">4</limit>
+	<limit type="registered_user_concurrent_jobs">2</limit>
         <limit type="unregistered_user_concurrent_jobs">0</limit>
 	<limit type="job_walltime">72:00:00</limit>
        	<limit type="output_size">268435456000</limit> 
