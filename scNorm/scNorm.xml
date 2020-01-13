@@ -1,0 +1,32 @@
+<tool id="scNorm" name="scnorm (in docker)">
+    <description>dim</description>
+    <requirements>
+	<container type="docker">docker.io/repbioinfo/scnorm.2018.01</container>
+    </requirements>
+    <command>
+ <![CDATA[
+
+ln -s  $input /data/matrix.csv  &&
+Rscript /bin/scnorm.R  matrix.csv NULL matrix_annotated_scNorm.csv 1 10 FALSE 0.1 FALSE 0 2>log
+&&
+mv /data/* .
+
+	
+
+  ]]> </command>
+    <inputs>
+	<param format="csv" name="input" label="input csv file" type="data" />
+    </inputs>
+    <outputs>
+        <data name="normalized matrix" format="csv" from_work_dir="matrix_annotated_scNorm.csv" />
+        <data name="discarded genes" format="txt" from_work_dir="discarded_genes.txt" />
+    </outputs>
+    <stdio>
+    <regex match="low space"
+           source="both"
+           level="warning"
+           description="Low space on device" />
+    </stdio>
+    <help>
+    </help>
+</tool>

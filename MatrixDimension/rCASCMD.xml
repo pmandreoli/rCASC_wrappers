@@ -10,9 +10,9 @@
 	
 	ln -s  ${MatrixName} scratch/MatrixName.csv  &&
 
-	###Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator 2>$log  &&
-	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator 2>$log  &&
-	mv scratch/dimensions.txt .
+	###Rscript $__tool_directory__/MainCustom.R MatrixName  csv $separator &&
+	Rscript  $__tool_directory__/MainCustom.R MatrixName csv $separator &&
+	mv scratch/dimensions.txt $output
 
   ]]> </command>
     <inputs>
@@ -20,9 +20,14 @@
 	<param name="separator" value="," type="text"/>
     </inputs>
     <outputs>
-        <data name="output" format="txt" from_work_dir="dimensions.txt"/>
-        <data name="log" format="txt" label="logfile"/>
+        <data name="output" format="txt" />
     </outputs>
+    <stdio>
+    <regex match="low space"
+           source="both"
+           level="warning"
+           description="Low space on device" />
+    </stdio>
     <help>
     </help>
 </tool>
