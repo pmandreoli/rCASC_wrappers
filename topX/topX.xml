@@ -1,0 +1,38 @@
+<tool id="topX" name="topX">
+    <description>topX</description>
+    <requirements>
+        <container type="docker">repbioinfo/desc.2018.01</container>
+    </requirements>
+    <command>
+ <![CDATA[
+        
+        ln -s  $annotate_matrix /data/annotate_matrix.${format} &&
+#####Rscript /bin/top.R annotated_Buettner csv , FALSE 10000 expression
+
+        Rscript  /bin/top.R  annotate_matrix  $format , $logged $threshold $type  2>$log &&
+     mv /data/* . 
+  
+]]> </command>
+    <inputs>
+	<param format="csv" name="annotate_matrix" label="input csv file" type="data" />
+	<param name="format" value="csv" type="text"/>
+	<param name="logged" type="select">
+		<option value="FALSE" selected="true">FALSE</option>
+		<option value="TRUE" >TRUE</option> 
+	</param>
+	<param name="threshold" value="10000" type="integer"/>
+	<param name="type" type="select">
+		<option value="variance">variance</option>
+		<option value="expression" selected="true">expression</option> 
+	</param>
+    </inputs>
+    <outputs>
+        <data name="output" format="pdf" from_work_dir="annotate_matrix_expression_gene_expression_distribution.pdf" label="${tool.name} on ${on_string} : pdf output"   />
+        <data name="output2" format="csv" from_work_dir="filtered_expression_annotate_matrix.csv" label="${tool.name} on ${on_string} :filtered annotated csv "/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string} :logfile"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
+
+
