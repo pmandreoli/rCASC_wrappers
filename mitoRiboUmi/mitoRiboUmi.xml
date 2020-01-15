@@ -1,0 +1,41 @@
+<tool id="mitoRiboUmi" name="mitoRiboUmi">
+    <description>mitoRiboUmi</description>
+    <requirements>
+	<container type="docker">docker.io/repbioinfo/ribomitoumi</container>
+    </requirements>
+    <macros>
+        <import>biotype.xml</import>
+    </macros>
+    <command>
+ <![CDATA[
+
+ln -s  $input /scratch/matrix.csv  &&
+ln -s  $input_gtf /scratch/file.gtf  &&
+####Rscript /home/main.R Buettner csv , Mus_musculus.GRCm38.95.gtf protein_coding 3 
+Rscript $__tool_directory__/main.R  matrix $format , file.gtf $biotype $umiXgene 2>log
+&&
+mv /scratch/Ribo_mito.pdf $output
+
+	
+
+  ]]> </command>
+    <inputs>
+	<param format="csv" name="input" label="input csv file" type="data" />
+	<param format="gtf" name="input_gtf" label="input gtf file" type="data" />
+	<param name="format" help="matrix format" value="csv" type="text" />
+	<param name="umiXgene" help="a integer defining how many UMI are required to call a gene as present" value="3" type="integer" />
+	<expand macro="biotype_menu"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="pdf" />
+    </outputs>
+    <stdio>
+    <regex match="low space"
+           source="both"
+           level="warning"
+           description="Low space on device" />
+    </stdio>
+    <help>
+    </help>
+</tool>
+
