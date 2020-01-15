@@ -1,0 +1,50 @@
+<tool id="SCanonByGtf" name="SCanonByGtf (in docker)">
+    <description>SCanonByGtf</description>
+    <requirements>
+	<container type="docker">repbioinfo/r332.2017.01</container>
+    </requirements>
+      <macros>
+	<import>biotype.xml</import>
+      </macros>
+    <command>
+ <![CDATA[
+	
+	ln -s  $counts_table /data/scratch/counts_table.${format} &&
+	ln -s  $gtf_file /data/scratch/file_gtf.gtf &&
+##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
+	Rscript  /bin/.scannoByGtf.R  counts_table.${format} file_gtf.gtf $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log && 
+     mv /data/scratch/* . 
+
+  ]]> </command>
+    <inputs>
+	<param format="csv" name="counts_table" label="input csv file" type="data" />
+	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
+	<param name="format" value="csv" type="text"/>
+	<expand macro="biotype_menu"/>
+	<param name="mt" type="select">
+		<option value="FALSE">FALSE</option>
+		<option value="TRUE" selected="true">TRUE</option> 
+	</param>
+	<param name="ribo_proteins" type="select">
+		<option value="FALSE">FALSE</option>
+		<option value="TRUE" selected="true">TRUE</option> 
+	</param>
+	<param name="R1" value="0" type="integer"/>
+	<param name="R2" value="100" type="integer"/>
+	<param name="R3" value="0" type="integer"/>
+	<param name="R4" value="100" type="integer"/>
+	<param name="umiXgene" value="3" type="integer"/>
+	<param name="thresholdGenes" value="250" type="integer"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="pdf" from_work_dir="counts_table_annotated_genes.pdf" label="${tool.name} on ${on_string} : pdf output"   />
+        <data name="output2" format="csv" from_work_dir="annotated_counts_table.csv" label="${tool.name} on ${on_string} :annotated csv "/>
+        <data name="output3" format="csv" from_work_dir="filtered_annotated_counts_table.csv" label="${tool.name} on ${on_string} :filtered annotated csv"/>
+        <data name="output4" format="txt" from_work_dir="filteredStatistics.txt" label="${tool.name} on ${on_string} :filtered statistic cvs"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string} :logfile"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
+
+
