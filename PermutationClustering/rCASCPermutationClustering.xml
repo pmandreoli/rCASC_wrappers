@@ -12,6 +12,7 @@
 	
 	Rscript /home/main.R ${NameMatrix} $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
         mkdir -p ${html_file.files_path} &&	
+        tar -zcvf zipOutput.tar.gz /scratch/* 2>>$log &&
         cp -R /scratch/* ${html_file.extra_files_path} &&
         bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
   ]]> </command>
@@ -44,9 +45,7 @@
     <outputs>
         <data name="html_file" format="html" label="html-files"/>
         <data name="log" format="txt" label="logfile"/>
-     <data name="report" format="tabular" label="clusterP" >
-        <discover_datasets pattern="Buettner" format="tabular" directory="\*/\*" visible="true" />
-    </data>
+        <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="input file for permutationalAnalysis"/>
     </outputs>
     <help>
     </help>
