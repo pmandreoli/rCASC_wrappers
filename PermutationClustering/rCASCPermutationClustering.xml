@@ -1,31 +1,19 @@
 <tool id="PermutationClustering" name="PermutationClustering (in docker)">
     <description>PermutationClustering function</description>
     <requirements>
-	<container type="docker">rcaloger/permutationclustering</container>
+	<container type="docker">repbioinfo/permutationclustering</container>
     </requirements>
     <command>
  <![CDATA[
 	##Rscript example
 	##Rscript main.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 
-	rm /home/*.R &&
 	
 	ln -s $MatrixName /scratch/${NameMatrix}.${Format} && 
 	
-	ln -s $__tool_directory__/functions.R /home &&
-	ln -s $__tool_directory__/permutation.R /home &&
-	ln -s $__tool_directory__/main.R /home &&	
 	Rscript /home/main.R ${NameMatrix} $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
-	
-	tar cvzf PermutationClustering.tar.gz /scratch  2>>$log
-
-
-
-
-
-
-
-
- 
+        mkdir -p ${html_file.files_path} &&	
+        cp -R /scratch/* ${html_file.extra_files_path} &&
+        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
   ]]> </command>
     <inputs>
 	<param format="csv" name="MatrixName" help="input matrix " type="data"/>
@@ -54,8 +42,11 @@
 	<param name="Seed" value="1111" type="integer" help="important value to reproduce the same results with same input" />
     </inputs>
     <outputs>
+        <data name="html_file" format="html" label="html-files"/>
         <data name="log" format="txt" label="logfile"/>
-       <data format="tar" name="output" from_work_dir="PermutationClustering.tar.gz" label="tar result folder PermutationClustering"/>
+     <data name="report" format="tabular" label="clusterP" >
+        <discover_datasets pattern="Buettner" format="tabular" directory="\*/\*" visible="true" />
+    </data>
     </outputs>
     <help>
     </help>
