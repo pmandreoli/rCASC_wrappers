@@ -1,0 +1,26 @@
+<tool id="CellRangerCount" name="CellRangerCount">
+    <description>CellRangerCount</description>
+    <requirements>
+	<container type="docker">repbioinfo/cellranger.2018.03</container>
+    </requirements>
+    <command>
+ <![CDATA[
+	##DefaultCommand /bin/cellranger count --id=example --transcriptome=/transcr --fastqs=/data
+ 
+        tar -xvf $fastqs -C /opt &&  
+        /bin/cellranger count --id=$Id --transcriptome=/export/refdata-cellranger-hg19_and_mm10-2.1.0 --fastqs=/opt --localcores=$Cores --localmem=$RAM &&
+ls . >> $log
+
+  ]]> </command>
+    <inputs>
+	<param name="fastqs" help="fastqs"  type="data" label="collection_offastqs"/>
+	<param name="Id" help="JOB id" value="example" type="text" label="JOB id name"/>
+	<param name="Cores" value="8" help='number of cores to use in this machine' type="integer"/>
+	<param name="RAM" value="12" type="integer" help="RAM quantity to use" />
+    </inputs>
+    <outputs>
+        <data name="log" format="txt" label="logfile"/>
+    </outputs>
+    <help>
+    </help>
+</tool>

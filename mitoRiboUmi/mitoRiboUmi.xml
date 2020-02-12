@@ -20,14 +20,17 @@ mv /scratch/Ribo_mito.pdf $output
 
   ]]> </command>
     <inputs>
-	<param format="csv" name="input" label="input csv file" type="data" />
-	<param format="gtf" name="input_gtf" label="input gtf file" type="data" />
-	<param name="format" help="matrix format" value="csv" type="text" />
+	<param format="csv" name="input" label="Input matrix file" type="data" />
+	<param format="gtf" name="input_gtf" label="ENSEMBLE gtf file" type="data" />
+	<param name="format" help="matrix format" value="csv" type="select">
+		<option value="csv" selected="True">csv</option>
+		<option value="txt">txt</option>
+        </param>
 	<param name="umiXgene" help="a integer defining how many UMI are required to call a gene as present" value="3" type="integer" />
 	<expand macro="biotype_menu"/>
     </inputs>
     <outputs>
-        <data name="output" format="pdf" />
+        <data name="output" format="pdf" label="${tool.name} on ${on_string}: PDF FILE download and see it using your default pdf-viewer"  />
     </outputs>
     <stdio>
     <regex match="low space"
