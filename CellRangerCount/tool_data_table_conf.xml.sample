@@ -1,0 +1,8 @@
+<tables>
+<!-- Location of index file CellRangerCount wrapper --> 
+    <table name="CellRangerCountIndex" comment_char="#">
+        <columns> value, dbkey, name, path</columns>
+        <file path="tool-data/CellRangerCountIndex.loc" />
+    </table>
+</tables>
+

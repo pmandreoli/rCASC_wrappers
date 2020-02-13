@@ -14,15 +14,17 @@
 			<param id="type">docker_dispatch</param>
 			<param id="docker_destination_id">local_docker</param>
 			<param id="default_destination_id">local_no_container</param>
+			<param id="local_slots">8</param>
 		</destination>
 		<destination id="local_no_container" runner="local">
 			<param id="enabled">true</param>
-			<param id="local_slots">2</param>
+			<param id="local_slots">8</param>
 		</destination>
 		<destination id="local_docker" runner="local">
 			<param id="docker_enabled">true</param>
 			<param id="docker_set_user">root</param>
-                        <param id="docker_volumes">$galaxy_root:ro,$tool_directory:rw,$galaxy_root/database/tmp:rw,$job_directory:rw,$working_directory:rw,$default_file_path:rw ,/cvmfs:ro</param>
+                        <param id="docker_volumes">$galaxy_root:ro,$tool_directory:rw,$galaxy_root/database/tmp:rw,$job_directory:rw,$working_directory:rw,$default_file_path:rw ,/export:ro</param>
+			<param id="local_slots">8</param>
 		</destination>
 	</destinations>
 		<tools>
