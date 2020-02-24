@@ -1,4 +1,0 @@
-- name: minimum playbook
-  hosts: localhost
-  roles:
-     - { role: indigo-dc.docker, docker_config:  { "data-root": "/export/docker_image", }}

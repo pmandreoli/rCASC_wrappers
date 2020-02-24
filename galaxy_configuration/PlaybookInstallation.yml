@@ -1,0 +1,27 @@
+- name: configure machine for rCASC
+  hosts: galaxy
+  become: yes
+  roles:
+    - { role: indigo-dc.docker, docker_config:  { "data-root": "/export/docker_image", }}
+  tasks:
+    - name: download wrapper github
+      git:
+        repo: https://github.com/pmandreoli/rCASC_wrappers.git
+        dest: /home/galaxy/galaxy/tools/rCASC_wrappers
+        clone: yes
+        version: dev
+      become_user: galaxy
+    - name: copy configuration files to dest
+      copy:
+        src: "{{ item }}"
+        dest: /home/galaxy/galaxy/config
+        remote_src: yes
+      with_items:
+        - /home/galaxy/galaxy/tools/rCASC_wrappers/galaxy_configuration/shed_tool_conf.xml
+        - /home/galaxy/galaxy/tools/rCASC_wrappers/galaxy_configuration/job_conf.xml
+        - /home/galaxy/galaxy/tools/rCASC_wrappers/galaxy_configuration/tool_data_table_conf.xml
+      become_user: galaxy
+    - name: reboot
+      command: "sudo supervisorctl restart galaxy:"
+
+
