@@ -9,12 +9,12 @@
     <command>
  <![CDATA[
 
-ln -s  $input /scratch/matrix.csv  &&
-ln -s  $input_gtf /scratch/file.gtf  &&
+	 ln -s  $input /scratch/matrix.csv  &&
+	 ln -s  $input_gtf /scratch/file.gtf  &&
 ####Rscript /home/main.R Buettner csv , Mus_musculus.GRCm38.95.gtf protein_coding 3 
-Rscript $__tool_directory__/main.R  matrix $format , file.gtf $biotype $umiXgene 2>log
-&&
-mv /scratch/Ribo_mito.pdf $output
+	 Rscript $__tool_directory__/main.R  matrix $format , file.gtf $biotype $umiXgene 2>log
+	 &&
+	 mv /scratch/Ribo_mito.pdf $output
 
 	
 

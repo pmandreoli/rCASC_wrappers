@@ -9,15 +9,22 @@
     <command>
  <![CDATA[
 	
-	ln -s  $counts_table /data/scratch/counts_table.${format} &&
+	ln -s  $matrix /data/scratch/matrix.${format} &&
 	ln -s  $gtf_file /data/scratch/file_gtf.gtf &&
 ##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
-	Rscript  /bin/.scannoByGtf.R  counts_table.${format} file_gtf.gtf $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log && 
-     mv /data/scratch/* . 
+	Rscript  /bin/.scannoByGtf.R  matrix.${format} file_gtf.gtf $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log && 
+
+        mkdir -p ${html_file.files_path} &&  
+
+        tar -zcvf zipOutput.tar.gz -C /data/scratch/ . 2>>$log &&
+
+        cp -R  /data/scratch/*  ${html_file.extra_files_path} &&
+
+        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
 
   ]]> </command>
     <inputs>
-	<param format="csv" name="counts_table" label="input csv file" type="data" />
+	<param format="csv" name="matrix" label="input csv file" type="data" />
 	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
 	<param name="format" value="csv" type="text"/>
 	<expand macro="biotype_menu"/>
@@ -37,11 +44,9 @@
 	<param name="thresholdGenes" value="250" type="integer"/>
     </inputs>
     <outputs>
-        <data name="output" format="pdf" from_work_dir="counts_table_annotated_genes.pdf" label="${tool.name} on ${on_string} : pdf output"   />
-        <data name="output2" format="csv" from_work_dir="annotated_counts_table.csv" label="${tool.name} on ${on_string} :annotated csv "/>
-        <data name="output3" format="csv" from_work_dir="filtered_annotated_counts_table.csv" label="${tool.name} on ${on_string} :filtered annotated csv"/>
-        <data name="output4" format="txt" from_work_dir="filteredStatistics.txt" label="${tool.name} on ${on_string} :filtered statistic cvs"/>
-        <data name="log" format="txt" label="${tool.name} on ${on_string} :logfile"/>
+        <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string}:log"/>
+        <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
     </outputs>
     <help>
     </help>

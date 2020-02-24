@@ -1,0 +1,45 @@
+<tool id="COMET" name="COMET">
+    <description>COMET</description>
+    <requirements>
+	<container type="docker">repbioinfo/cometsc.2020.01</container>
+    </requirements>
+    <command>
+ <![CDATA[
+	###Default /bin/cometsc.sh bmsnkn_5x100cells 2 0.15 2 True True 5 \t
+        tar -xvf $tar -C /scratch &&
+	/bin/cometsc.sh annotated_matrix $threads $X $K $counts $skipvis $nCluster $Separator 2>$log &&
+        mkdir -p ${html_file.files_path} &&	
+        tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
+        cp -R /scratch/* ${html_file.extra_files_path} &&
+        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
+
+  ]]> </command>
+    <inputs>
+     <param format="tar" name="tar" help="input matrix" type="data"/>
+	<param name="threads" value="1" help='number of cores to use in this machine' type="integer"/>
+	<param name="X" value="0.15" type="float" help="argument for XL-mgHG" />
+        <param name="K" type="select" label="number of gene combination to be considered" help="Select genome index from the list">
+		<option value="2" selected="True">2</option>
+		<option value="3" >3</option>
+		<option value="4" >4</option>
+	</param>
+        <param name="counts" type="select" label="if set to True it will graph the log(expression+1">
+		<option value="True" selected="True">True</option>
+		<option value="False">False</option>
+	</param>
+        <param name="skipvis" type="select" label="if set to True it will graph the log(expression+1">
+		<option value="True" selected="True">True</option>
+		<option value="False">False</option>
+	</param>
+	<param name="nCluster" value="1" help='number ofcluster' type="integer"/>
+	<param name="Separator" value="," help='separator' type="text"/>
+
+    </inputs>
+    <outputs>
+        <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string}:log"/>
+        <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
+    </outputs>
+    <help>
+    </help>
+</tool>

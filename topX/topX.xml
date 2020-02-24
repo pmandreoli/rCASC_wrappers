@@ -6,18 +6,23 @@
     <command>
  <![CDATA[
       ##simbolic lin to input inside docker workdir   
-
-        ln -s  $annotate_matrix /data/annotate_matrix.${format} &&
+        tar -zxvf $tar_from_sc -C /data &&
 
       ###COMMAND EXAMPLE: Rscript /bin/top.R annotated_Buettner csv , FALSE 10000 expression
 
-        Rscript  /bin/top.R  annotate_matrix  $format , $logged $threshold $type  &&
+        Rscript  /bin/top.R  annotated_matrix  $format , $logged $threshold $type  &&
 
-	mv /data/* . 
+        mkdir -p ${html_file.files_path} &&  
+        cp -R  /data/*  ${html_file.extra_files_path} &&
+
+        tar -zcvf zipOutput.tar.gz -C /data/ . 2>>$log &&
+
+        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
+
   
 ]]> </command>
     <inputs>
-	<param format="csv" name="annotate_matrix" label="input csv file" type="data" />
+	<param format="tar" name="tar_from_sc" label="input tar file" type="data" />
 	<param name="format" value="csv" type="text"/>
 	<param name="logged" type="select">
 		<option value="FALSE" selected="true">FALSE</option>
@@ -30,8 +35,9 @@
 	</param>
     </inputs>
     <outputs>
-        <data name="output" format="pdf" from_work_dir="annotate_matrix_expression_gene_expression_distribution.pdf" label="${tool.name} on ${on_string} : pdf output"   />
-        <data name="output2" format="csv" from_work_dir="filtered_expression_annotate_matrix.csv" label="${tool.name} on ${on_string} :filtered annotated csv "/>
+        <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string}:log"/>
+        <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
     </outputs>
     <stdio>
     <regex match="ERROR"

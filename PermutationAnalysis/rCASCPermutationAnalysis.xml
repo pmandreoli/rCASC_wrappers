@@ -5,16 +5,15 @@
     </requirements>
     <command>
  <![CDATA[
-   tar -zxvf $tar_Clustering  &&
-   mv scratch/* /scratch/ 2>>$log &&
-        
 
-   Rscript $__tool_directory__/main.R $NameMatrix $Range1 $Range2 $Format $Separator $Sp $ClusterPermErr $MaxDeltaConfidence $MinLogMean 2>>$log && 
+   tar -zxvf $tar_Clustering -C /scratch &&
+
+   Rscript $__tool_directory__/main.R annotated_matrix $Range1 $Range2 $Format $Separator $Sp $ClusterPermErr $MaxDeltaConfidence $MinLogMean 2>>$log && 
 
 
 ####	permAnalysis(group=group, scratch.folder=scratch.folder, file=file,range1=3,range2=4,separator=",",sp=0.8,clusterPermErr=0.05,maxDeltaConfidence=0.5,minLogMean=60)
         mkdir -p ${html_file.files_path} &&	
-        tar -zcvf zipOutput.tar.gz /scratch/* 2>>$log &&
+        tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
         cp -R /scratch/* ${html_file.extra_files_path} &&
         bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
 
@@ -23,7 +22,6 @@
   ]]> </command>
     <inputs>
 	<param format="tar" name="tar_Clustering" help="input matrix " type="data"/>
-	<param name="NameMatrix" help="inputMatrixname" value="annotated_lorenz_testSCumi_mm10" type="text" label="matrix in input"/>
 	<param name="Range1" value="3" type="integer" help="first number of cluster for k means algorithm" />
 	<param name="Range2" value="4" type="integer" help="last number of cluster for k means algorithm" />
 	<param name="Format" type="select" help="matrix format" >

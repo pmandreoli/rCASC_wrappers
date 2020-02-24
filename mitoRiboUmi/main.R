@@ -59,7 +59,6 @@ return(annotation$gene_name[which(annotation$gene_id==x)])
 })
 #rownames(mainMatrix)=newNames
 
-
 rps <- grep("^RPS",toupper(newNames))
 rpl <- grep("^RPL",toupper(newNames))
 ribosomal <- c(rps, rpl)

@@ -8,8 +8,10 @@
 	##DefaultCommand /bin/cellranger count --id=example --transcriptome=/transcr --fastqs=/data
  
         tar -xvf $fastqs -C /opt &&  
+
         /bin/cellranger count --id=$Id --transcriptome=$ref_file.fields.path --fastqs=/opt --localcores=$Cores --localmem=$RAM &&
-ls . >> $log
+
+        /bin/cellranger mat2csv $Id/outs/filtered_feature_bc_matrix  $matrix
 
   ]]> </command>
     <inputs>
@@ -27,6 +29,7 @@ ls . >> $log
     </inputs>
     <outputs>
         <data name="log" format="txt" label="logfile"/>
+        <data name="matrix" format="csv" label="matrix"/>
     </outputs>
     <help>
     </help>
