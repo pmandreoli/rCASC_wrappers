@@ -1,35 +1,22 @@
 <tool id="PermutationClustering" name="PermutationClustering (in docker)">
     <description>PermutationClustering function</description>
     <requirements>
-	<container type="docker">rcaloger/permutationclustering</container>
+	<container type="docker">repbioinfo/permutationclustering</container>
     </requirements>
     <command>
  <![CDATA[
 	##Rscript example
 	##Rscript main.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 
-	rm /home/*.R &&
+        tar -zxvf $tar_from_topx -C /scratch &&
 	
-	ln -s $MatrixName /scratch/${NameMatrix}.${Format} && 
-	
-	ln -s $__tool_directory__/functions.R /home &&
-	ln -s $__tool_directory__/permutation.R /home &&
-	ln -s $__tool_directory__/main.R /home &&	
-	Rscript /home/main.R ${NameMatrix} $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
-	
-	tar cvzf PermutationClustering.tar.gz /scratch  2>>$log
-
-
-
-
-
-
-
-
- 
+	Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
+        mkdir -p ${html_file.files_path} &&	
+        tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
+        cp -R /scratch/* ${html_file.extra_files_path} &&
+        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
   ]]> </command>
     <inputs>
-	<param format="csv" name="MatrixName" help="input matrix " type="data"/>
-	<param name="NameMatrix" help="inputMatrixname" value="annotated_lorenz_testSCumi_mm10" type="text" label="matrix in input"/>
+	<param format="tar" name="tar_from_topx" help="input matrix " type="data"/>
 	<param name="NPerm" value="4" help='number of permutations to perform the pValue to evaluate clustering' type="integer"/>
 	<param name="PermAtTime" value="2" type="integer" help="number of permutations that can be computes in parallel" />
 	<param name="Percent" value="10" type="integer" help="percentage of randomly selected cells removed in each permutation" />
@@ -37,8 +24,12 @@
 	<param name="Range2" value="4" type="integer" help="last number of cluster for k means algorithm" />
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
+		<option value="txt" >txt</option>
 	</param>
-	<param name="Separator" value="," type="text" help="separator used in count file, e.g. '\\t', ','" />
+	<param name="Separator" value="," type="select" help="separator used in count file, e.g. '\\t', ','" >
+		<option value="," selected="True">comma-separated</option>
+		<option value="tab" >tab separated</option>
+	</param>
 	<param name="LogTen" value="0" type="integer" help="1 if the count matrix is already in log10, 0 otherwise" />
 	<param name="Clustering"  type="select" help="clustering method to use : SIMLR , tSne or griph" > 
 		<option value="griph" selected="True">griph</option>
@@ -54,8 +45,9 @@
 	<param name="Seed" value="1111" type="integer" help="important value to reproduce the same results with same input" />
     </inputs>
     <outputs>
-        <data name="log" format="txt" label="${tool.name} on ${on_string} :logfile"/>
-       <data format="tar" name="output" from_work_dir="PermutationClustering.tar.gz" label="${tool.name} on ${on_string} :tar result folder "/>
+        <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string}:log"/>
+        <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
     </outputs>
     <help>
     </help>

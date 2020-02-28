@@ -19,13 +19,10 @@
 	</destination>
     </destinations>
 <tools>
+<!--specify all the tools that utilize docker as requirement-->
         <tool id="PermutationAnalysis" destination="docker_local"/>
-        <tool id="PermutationClustering" destination="docker_local"/>
-        <tool id="Crosslabel" destination="docker_local"/>
-        <tool id="MatrixDimension" destination="docker_local"/>
-        <tool id="Lorenz" destination="docker_local"/>
-        <tool id="SCanonByGtf" destination="docker_local"/>
     </tools>
+
     <limits>
 	<limit type="registered_user_concurrent_jobs">2</limit>
         <limit type="unregistered_user_concurrent_jobs">0</limit>

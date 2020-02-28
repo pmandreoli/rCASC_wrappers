@@ -1,0 +1,58 @@
+<tool id="SCanonByGtf" name="SCanonByGtf (in docker)">
+    <description>SCanonByGtf</description>
+    <requirements>
+	<container type="docker">repbioinfo/r332.2017.01</container>
+    </requirements>
+      <macros>
+	<import>biotype.xml</import>
+      </macros>
+    <command>
+ <![CDATA[
+	
+	ln -s  $matrix /data/scratch/matrix.${format} &&
+	ln -s  $gtf_file /data/scratch/file_gtf.gtf &&
+##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
+	Rscript  /bin/.scannoByGtf.R  matrix.${format} file_gtf.gtf $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes 2>$log && 
+
+        mkdir -p ${html_file.files_path} &&  
+
+        tar -zcvf zipOutput.tar.gz -C /data/scratch/ . 2>>$log &&
+
+        cp -R  /data/scratch/*  ${html_file.extra_files_path} &&
+
+        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
+
+  ]]> </command>
+    <inputs>
+	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
+	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
+	<param name="format" value="csv" type="select">
+		<option value="txt">txt</option>
+		<option value="csv" selected="true">csv</option> 
+	</param>
+	<expand macro="biotype_menu"/>
+	<param name="mt" type="select">
+		<option value="FALSE">FALSE</option>
+		<option value="TRUE" selected="true">TRUE</option> 
+	</param>
+	<param name="ribo_proteins" type="select">
+		<option value="FALSE">FALSE</option>
+		<option value="TRUE" selected="true">TRUE</option> 
+	</param>
+	<param name="R1" value="0" type="integer"/>
+	<param name="R2" value="100" type="integer"/>
+	<param name="R3" value="0" type="integer"/>
+	<param name="R4" value="100" type="integer"/>
+	<param name="umiXgene" value="3" type="integer"/>
+	<param name="thresholdGenes" value="250" type="integer"/>
+    </inputs>
+    <outputs>
+        <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+        <data name="log" format="txt" label="${tool.name} on ${on_string}:log"/>
+        <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
+
+
