@@ -7,8 +7,9 @@
  <![CDATA[
 
    tar -zxvf $tar_Clustering -C /scratch &&
-
-   Rscript /home/main.R annotated_matrix $nCluster $Format $Separator $Sp FALSE 2>>$log && 
+   NCLUSTER=\$(basename "\$(ls -d /scratch/*/[0-9]*)") ; 
+   export NCLUSTER=\$NCLUSTER ;   
+   Rscript /home/main.R annotated_matrix \${NCLUSTER} $Format $Separator $Sp FALSE 2>>$log && 
 
 
         mkdir -p ${html_file.files_path} &&	
@@ -21,11 +22,14 @@
   ]]> </command>
     <inputs>
 	<param format="tar" name="tar_Clustering" help="input matrix " type="data"/>
-	<param name="nCluster" value="3" type="integer" help="number of Cluster" />
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
+		<option value="txt" >txt</option>
 	</param>
-	<param name="Separator" value="," type="text" help="separator used in count file, e.g. '\\t', ','" />
+	<param name="Separator" value="," type="select" help="separator used in count file" >
+		<option value="," selected="True">comma-separated</option>
+		<option value="tab" >tab-separated</option>
+	</param>
 	<param name="Sp" value="0.8" type="float" help="to insert" />
     </inputs>
     <outputs>

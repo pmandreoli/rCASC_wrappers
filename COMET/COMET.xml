@@ -7,7 +7,13 @@
  <![CDATA[
 	###Default /bin/cometsc.sh bmsnkn_5x100cells 2 0.15 2 True True 5 \t
         tar -xvf $tar -C /scratch &&
-	/bin/cometsc.sh annotated_matrix $threads $X $K $counts $skipvis $nCluster $Separator 2>$log &&
+       
+      ### comet with cluster defined maybe for new implmentation /bin/cometsc.sh annotated_matrix $threads $X $K $counts $skipvis $nCluster $Separator 2>$log &&
+
+         NCLUSTER=\$(basename "\$(ls -d /scratch/*/[0-9]*)") ; 
+         export NCLUSTER=\$NCLUSTER ;   
+
+	/bin/cometsc.sh annotated_matrix $threads $X $K $counts $skipvis \${NCLUSTER} $Separator 2>$log &&
         mkdir -p ${html_file.files_path} &&	
         tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
         cp -R /scratch/* ${html_file.extra_files_path} &&
@@ -31,9 +37,11 @@
 		<option value="True" selected="True">True</option>
 		<option value="False">False</option>
 	</param>
-	<param name="nCluster" value="1" help='number ofcluster' type="integer"/>
-	<param name="Separator" value="," help='separator' type="text"/>
-
+<!--	<param name="nCluster" value="1" help='number ofcluster' type="integer"/>-->
+	<param name="Separator" value="," type="select" help="separator used in count file" >
+		<option value="," selected="True">comma-separated</option>
+		<option value="tab" >tab-separated</option>
+	</param>
     </inputs>
     <outputs>
         <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>

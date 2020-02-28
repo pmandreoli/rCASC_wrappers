@@ -10,7 +10,7 @@
 
       ###COMMAND EXAMPLE: Rscript /bin/top.R annotated_Buettner csv , FALSE 10000 expression
 
-        Rscript  /bin/top.R  annotated_matrix  $format , $logged $threshold $type  &&
+        Rscript  /bin/top.R  annotated_matrix  $Format $Separator $logged $threshold $type  &&
 
         mkdir -p ${html_file.files_path} &&  
         cp -R  /data/*  ${html_file.extra_files_path} &&
@@ -23,10 +23,17 @@
 ]]> </command>
     <inputs>
 	<param format="tar" name="tar_from_sc" label="input tar file" type="data" />
-	<param name="format" value="csv" type="text"/>
 	<param name="logged" type="select">
 		<option value="FALSE" selected="true">FALSE</option>
 		<option value="TRUE" >TRUE</option> 
+	</param>
+	<param name="Format" type="select" help="matrix format" >
+		<option value="csv" selected="True">csv</option>
+		<option value="txt" >txt</option>
+	</param>
+	<param name="Separator" value="," type="select" help="separator used in count file" >
+		<option value="," selected="True">comma-separated</option>
+		<option value="tab" >tab-separated</option>
 	</param>
 	<param name="threshold" value="10000" type="integer"/>
 	<param name="type" type="select">

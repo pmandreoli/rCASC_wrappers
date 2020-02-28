@@ -24,8 +24,12 @@
 	<param name="Range2" value="4" type="integer" help="last number of cluster for k means algorithm" />
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
+		<option value="txt" >txt</option>
 	</param>
-	<param name="Separator" value="," type="text" help="separator used in count file, e.g. '\\t', ','" />
+	<param name="Separator" value="," type="select" help="separator used in count file, e.g. '\\t', ','" >
+		<option value="," selected="True">comma-separated</option>
+		<option value="tab" >tab separated</option>
+	</param>
 	<param name="LogTen" value="0" type="integer" help="1 if the count matrix is already in log10, 0 otherwise" />
 	<param name="Clustering"  type="select" help="clustering method to use : SIMLR , tSne or griph" > 
 		<option value="griph" selected="True">griph</option>

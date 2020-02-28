@@ -24,9 +24,12 @@
 
   ]]> </command>
     <inputs>
-	<param format="csv" name="matrix" label="input csv file" type="data" />
+	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
 	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
-	<param name="format" value="csv" type="text"/>
+	<param name="format" value="csv" type="select">
+		<option value="txt">txt</option>
+		<option value="csv" selected="true">csv</option> 
+	</param>
 	<expand macro="biotype_menu"/>
 	<param name="mt" type="select">
 		<option value="FALSE">FALSE</option>
