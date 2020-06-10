@@ -21,7 +21,7 @@
  
   ]]> </command>
     <inputs>
-	<param format="tar" name="tar_Clustering" help="input matrix " type="data"/>
+	<param format="tar" name="tar_Clustering" help="input matrix " type="data" label="" help="input file for" />
 	<param name="Range1" value="3" type="integer" help="first number of cluster for k means algorithm" />
 	<param name="Range2" value="4" type="integer" help="last number of cluster for k means algorithm" />
 	<param name="Format" type="select" help="matrix format" >
@@ -30,8 +30,8 @@
 	<param name="Separator" value="," type="text" help="separator used in count file, e.g. '\\t', ','" />
 	<param name="Sp" value="0.8" type="float" help="to insert" />
 	<param name="ClusterPermErr" value="0.05" type="float" help="to insert" />
-	<param name="MaxDeltaConfidence" value="0.5" type="float" help="to insert" />
-	<param name="MinLogMean" value="60" type="integer" help="to insert" />
+	<param name="MaxDeltaConfidence" value="0.01" type="float" help="to insert" />
+	<param name="MinLogMean" value="0.05" type="float" help="to insert" />
     </inputs>
     <outputs>
         <data name="log" format="txt" label="logfile"/>
