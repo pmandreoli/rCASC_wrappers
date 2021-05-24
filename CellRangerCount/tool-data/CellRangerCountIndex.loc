@@ -1,2 +1,4 @@
 ##Assembly,dbkey,name,path
-hg19	hg19test	indextest	/export/refdata-cellranger-hg19_and_mm10-2.1.0
+mm10	mm10	mm10-index	/home/galaxy/galaxy/rcascv2/reference_data/refdata-gex-mm10-2020-A/
+hg38	hg38	hg38-index	/home/galaxy/galaxy/rcascv2/reference_data/refdata-gex-GRCh38-2020-A/
+

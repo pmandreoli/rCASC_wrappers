@@ -7,16 +7,16 @@
  <![CDATA[
 	##Rscript example
 	##Rscript main.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 
-        tar -zxvf $tar_from_topx -C /scratch &&
+      ln -s  $matrix /data/scratch/annotated_matrix.${format} &&
 	
 	Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
         mkdir -p ${html_file.files_path} &&	
         tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
         cp -R /scratch/* ${html_file.extra_files_path} &&
-        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
+        tree -H $html_file.extra_files_path $html_file
   ]]> </command>
     <inputs>
-	<param format="tar" name="tar_from_topx" help="input matrix " type="data"/>
+	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
 	<param name="NPerm" value="4" help='number of permutations to perform the pValue to evaluate clustering' type="integer"/>
 	<param name="PermAtTime" value="2" type="integer" help="number of permutations that can be computes in parallel" />
 	<param name="Percent" value="10" type="integer" help="percentage of randomly selected cells removed in each permutation" />
