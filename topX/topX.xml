@@ -21,7 +21,7 @@
   
 ]]> </command>
     <inputs>
-	<param format="tabular" name="annotated_matrix" label="input tabular file" type="data" />
+	<param format="csv,txt" name="annotated_matrix" label="input tabular file" type="data" />
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
 		<option value="txt" >txt</option>

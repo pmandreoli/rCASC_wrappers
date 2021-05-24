@@ -7,7 +7,7 @@
  <![CDATA[
 	##Rscript example
 	##Rscript main.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 
-      ln -s  $matrix /data/scratch/annotated_matrix.${format} &&
+      ln -s  $matrix /data/scratch/annotated_matrix.${Format} &&
 	
 	Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent $Range1 $Range2 $Format $Separator $LogTen $Clustering $Rk $Perplexity $Seed 2>$log &&
         mkdir -p ${html_file.files_path} &&	
