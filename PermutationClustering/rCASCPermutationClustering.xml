@@ -13,7 +13,8 @@
         mkdir -p ${html_file.files_path} &&	
         tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
         cp -R /scratch/* ${html_file.extra_files_path} &&
-        tree -H $html_file.extra_files_path $html_file
+        tree $html_file.extra_files_path -H .  -T "permutationClustering" -o $html_file
+
   ]]> </command>
     <inputs>
 	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
