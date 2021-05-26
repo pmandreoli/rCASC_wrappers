@@ -28,7 +28,7 @@
 			</param>
 		</inputs>
 		<outputs>
-			<data name="matrix" format="csv" label="${tool.name} on ${on_string}:html-file"/>
+			<data name="matrix" format="csv" label="${tool.name} on ${on_string}: matrix"/>
 		</outputs>
 		<stdio>
 			<regex match="Error"
