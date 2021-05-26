@@ -1,36 +1,41 @@
 <tool id="CellRangerCount" name="CellRangerCount">
-    <description>CellRangerCount</description>
-    <requirements>
-	<container type="docker">repbioinfo/cellranger.2018.03</container>
-    </requirements>
-    <command>
- <![CDATA[
-	##DefaultCommand /bin/cellranger count --id=example --transcriptome=/transcr --fastqs=/data
- 
-        tar -xvf $fastqs -C /opt &&  
+	<description>CellRangerCount</description>
+	<requirements>
+		<container type="docker">repbioinfo/cellranger.2018.03</container>
+	</requirements>
+	<command>
+		<![CDATA[
+			##DefaultCommand /bin/cellranger count --id=example --transcriptome=/transcr --fastqs=/data
 
-        /bin/cellranger count --id=$Id --transcriptome=$ref_file.fields.path --fastqs=/opt --localcores=$Cores --localmem=$RAM &&
+			tar -xvf $fastqs -C /opt &&  
 
-        /bin/cellranger mat2csv $Id/outs/filtered_feature_bc_matrix  $matrix
+			/bin/cellranger count --id=$Id --transcriptome=$ref_file.fields.path --fastqs=/opt --localcores=$Cores --localmem=$RAM &&
 
-  ]]> </command>
-    <inputs>
-	<param name="fastqs" help="fastqs"  type="data" label="collection_offastqs"/>
-	<param name="Id" help="JOB id" value="example" type="text" label="JOB id name"/>
-	<param name="Cores" value="8" help='number of cores to use in this machine' type="integer"/>
-	<param name="RAM" value="12" type="integer" help="RAM quantity to use" />
-        <param name="ref_file" type="select" label="Using indexed reference genome" help="Select genome index from the list">
-            <options from_data_table="CellRangerCountIndex">
-              <filter type="sort_by" column="2" />
-              <validator type="no_options" message="No indexes are available" />
-            </options>
-       <validator type="no_options" message="A built-in reference genome is not available for the build associated with the selected input file"/>
-    </param>
-    </inputs>
-    <outputs>
-        <data name="log" format="txt" label="logfile"/>
-        <data name="matrix" format="csv" label="matrix"/>
-    </outputs>
-    <help>
-    </help>
-</tool>
+			/bin/cellranger mat2csv $Id/outs/filtered_feature_bc_matrix  $matrix
+
+			]]> </command>
+		<inputs>
+			<param name="fastqs" help="fastqs"  type="data" label="collection_offastqs"/>
+			<param name="Id" help="JOB id" value="example" type="text" label="JOB id name"/>
+			<param name="Cores" value="8" help='number of cores to use in this machine' type="integer"/>
+			<param name="RAM" value="12" type="integer" help="RAM quantity to use" />
+			<param name="ref_file" type="select" label="Using indexed reference genome" help="Select genome index from the list">
+				<options from_data_table="CellRangerCountIndex">
+					<filter type="sort_by" column="2" />
+					<validator type="no_options" message="No indexes are available" />
+				</options>
+				<validator type="no_options" message="A built-in reference genome is not available for the build associated with the selected input file"/>
+			</param>
+		</inputs>
+		<outputs>
+			<data name="matrix" format="csv" label="${tool.name} on ${on_string}:html-file"/>
+		</outputs>
+		<stdio>
+			<regex match="Error"
+				source="both"
+				level="fatal"
+				description="Unknown error encountered" />
+		</stdio>
+		<help>
+		</help>
+	</tool>
