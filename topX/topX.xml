@@ -1,7 +1,7 @@
 <tool id="topX" name="topX">
     <description>topX</description>
     <requirements>
-	    <container type="docker">repbioinfo/desc.2018.01</container>
+	    <container type="docker">repbioinfo/topxv2:1</container>
     </requirements>
     <command>
  <![CDATA[

@@ -1,7 +1,7 @@
 <tool id="CellRangerCount" name="CellRangerCount">
 	<description>CellRangerCount</description>
 	<requirements>
-		<container type="docker">repbioinfo/cellranger.2018.03</container>
+		<container type="docker">repbioinfo/cellrangerv2:1</container>
 	</requirements>
 	<command>
 		<![CDATA[
@@ -15,7 +15,7 @@
 
 			]]> </command>
 		<inputs>
-			<param name="fastqs" help="fastqs"  type="data" label="collection_offastqs"/>
+			<param name="fastqs" help="fastqs"  type="data" label="fastq collection"/>
 			<param name="Id" help="JOB id" value="example" type="text" label="JOB id name"/>
 			<param name="Cores" value="8" help='number of cores to use in this machine' type="integer"/>
 			<param name="RAM" value="12" type="integer" help="RAM quantity to use" />

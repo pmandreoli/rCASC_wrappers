@@ -1,7 +1,7 @@
 <tool id="SCanonByGtf" name="SCanonByGtf (in docker)">
     <description>SCanonByGtf</description>
     <requirements>
-	<container type="docker">scannobygtf_testga:v2</container>
+	    <container type="docker">repbioinfo/scannobygtfv2:1</container>
     </requirements>
       <macros>
 	<import>biotype.xml</import>

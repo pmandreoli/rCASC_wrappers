@@ -1,0 +1,62 @@
+<tool id="autoencoder" name="autoencoder">
+	<description>autoencoder function</description>
+	<requirements>
+		<container type="docker">repbioinfo/autoencodercpu</container>
+	</requirements>
+	<command>
+		<![CDATA[
+			##python script example
+			##autoencoder(group=c("sudo"), scratch.folder=paste(getwd(),"scratch",sep="/"), file=file,separator=",", nCluster=5, bias="TF", permutation=3, nEpochs=50,patiencePercentage=5, cl=paste(getwd(),"setA_clustering.output.csv",sep="/"),seed=1111,projectName="PROVA",bN="NULL",lr=0.01,beta_1=0.9,beta_2=0.999,epsilon=0.00000001,decay=0.0,loss="mean_squared_error",regularization=10,variational=FALSE)
+
+			ln -s  $matrix /scratch/annotated_matrix.${Format} &&
+			ln -s  $clusterfile /scratch/clusterfile.${Format} &&
+
+			python3  /home/autoencoder.py annotated_matrix $Separator $ncluster $bias $permutation $nEpochs $patientPercentage $clusterfile $Seed $projectname NULL 0.01 0.999 0.00000001 0.0 mean_squared_error 10 FALSE &&
+
+			mkdir -p ${html_file.files_path} &&	
+			tar -zcvf zipOutput.tar.gz -C /scratch/ .  &&
+			cp -R /scratch/* ${html_file.extra_files_path} &&
+			tree $html_file.extra_files_path -H .  -T "permutationClustering" -o $html_file
+
+			]]> </command>
+		<inputs>
+			<param format="csv,txt" name="matrix" label="input csv file" type="data" />
+			<param format="csv,txt" name="clusterfile" label="input clusterfile" type="data" />
+			<param name="ncluster" value="4" help='number of permutations to perform the pValue to evaluate clustering' type="integer"/>
+			<param name="bias" type="select" help="matrix format" >
+				<option value="TF" selected="True">TF</option>
+					mirna" , "TF", "CUSTOM", kinasi,immunoSignature,ALL
+				<option value="immunosignature" >immunosignature</option>
+				<option value="ALL" >ALL</option>
+				<option value="mirna" >mirna</option>
+				<option value="TF" >TF</option>
+				<option value="kinasi" >kinasi</option>
+				<option value="CUSTOM" >CUSTOM</option>
+			</param>
+			<param name="permutation" value="2" type="integer" help="number of permutations that can be computes in parallel" />
+			<param name="patientPercentage" value="5" type="integer" help="patient percentage" />
+			<param name="nEpochs" value="1000" type="integer" help="nepochs" />
+			<param name="Format" type="select" help="matrix format" >
+				<option value="csv" selected="True">csv</option>
+				<option value="txt" >txt</option>
+			</param>
+			<param name="Separator" value="," type="select" help="separator used in count file, e.g. '\\t', ','" >
+				<option value="," selected="True">comma-separated</option>
+				<option value="tab" >tab separated</option>
+			</param>
+			<param name="Seed" value="1111" type="integer" help="important value to reproduce the same results with same input" />
+			<param name="projectname" value="prova" type="text" help="projectname" />
+		</inputs>
+		<outputs>
+			<data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+			<data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
+		</outputs>
+		<stdio>
+			<regex match="Error"
+				source="stderr"
+				level="fatal"
+				description="Unknown error encountered" />
+		</stdio>
+			<help>
+			</help>
+		</tool>

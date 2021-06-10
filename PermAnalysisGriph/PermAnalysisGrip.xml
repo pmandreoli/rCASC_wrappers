@@ -1,27 +1,42 @@
 <tool id="PermAnalysisGriph" name="PermAnalysisGriph">
     <description>PermAnalysisGrip</description>
     <requirements>
-	<container type="docker">repbioinfo/seuratanalysis</container>
+	    <container type="docker">repbioinfo/permutationanalysisv2:1</container>
     </requirements>
     <command>
  <![CDATA[
 
    tar -zxvf $tar_Clustering -C /scratch &&
+   #if $clustering_type.Clustering=='main_SEURAT_GRIPH.R' 
+
    NCLUSTER=\$(basename "\$(ls -d /scratch/*/[0-9]*)") ; 
    export NCLUSTER=\$NCLUSTER ;   
-   Rscript /home/main.R annotated_matrix \${NCLUSTER} $Format $Separator $Sp FALSE 2>>$log && 
+   Rscript /home/$clustering_type.Clustering annotated_matrix \${NCLUSTER} $Format $Separator $Sp FALSE 2>>$log &&  
+#else 
+    Rscript /home/$clustering_type.Clustering annotated_matrix $clustering_type.Range1 $clustering_type.Range2 $Format $Separator $Sp 0.05 0.01 0.05 2>>$log && 
 
-
-        mkdir -p ${html_file.files_path} &&	
-        tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
-        cp -R /scratch/* ${html_file.extra_files_path} &&
-        bash $__tool_directory__/files.sh $html_file.extra_files_path $html_file
+#end if
+	    
+   mkdir -p ${html_file.files_path} &&	
+   tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
+   cp -R /scratch/* ${html_file.extra_files_path} &&
+   tree $html_file.extra_files_path -H .  -T "permutationAnalysis" -o $html_file
 
 
  
   ]]> </command>
     <inputs>
 	<param format="tar" name="tar_Clustering" help="input matrix " type="data"/>
+        <conditional name="clustering_type">
+	<param name="Clustering" type="select" help="clustering method" >
+		<option value="main_SEURAT_GRIPH.R" selected="True">seurat-griph </option>
+		<option value="main_SIMLR_TSNE.R" >Simlr-kmeams</option>
+	</param>
+	<when value="main_SIMLR_TSNE.R">
+	<param name="Range1" value="3" type="integer" help="to insert" />
+	<param name="Range2" value="4" type="integer" help="to insert" />
+	</when>
+	</conditional>
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
 		<option value="txt" >txt</option>
