@@ -6,14 +6,11 @@
     <command>
  <![CDATA[
 	###Default /bin/cometsc.sh bmsnkn_5x100cells 2 0.15 2 True True 5 \t
-        ln -s  $matrix /scratch/annotated_matrix.${Format} &&
-        ln -s  $clustering_file /scratch/annotated_matrix_clustering.output.${Format} &&
-         
-        NCLUSTER=\$(awk -F, '{ if (NR>1) print \$2 }' $clustering_file | sort | uniq | wc -l) &&
-        mkdir -p /scratch/annotated_matrix/\$NCLUSTER &&
-        ##NCLUSTER=\$(awk -F, '{ if (NR>1) print \$2 }' /scratch/annotated_matrix_clustering.output.* | sort | uniq | wc -l) &&
-
-
+        tar -xvf $tar -C /scratch &&
+       
+      ### comet with cluster defined maybe for new implmentation /bin/cometsc.sh annotated_matrix $threads $X $K $counts $skipvis $nCluster $Separator 2>$log &&
+         NCLUSTER=\$(basename "\$(ls -d /scratch/*/[0-9]*)");
+         export NCLUSTER=\$NCLUSTER ;   
 
 	/bin/cometsc.sh annotated_matrix $threads $X $K $counts $skipvis \${NCLUSTER} $Separator 2>$log &&
         mkdir -p ${html_file.files_path} &&	
@@ -23,13 +20,7 @@
 
   ]]> </command>
     <inputs>
-	
-	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
-	<param format="csv,txt" name="clustering_file" label="input clustering file from permanalysis" type="data" />
-	<param name="Format" type="select" help="matrix format" >
-		<option value="csv" selected="True">csv</option>
-		<option value="txt" >txt</option>
-	</param>
+     <param format="tar" name="tar" help="input matrix" type="data"/>
 	<param name="threads" value="1" help='number of cores to use in this machine' type="integer"/>
 	<param name="X" value="0.15" type="float" help="argument for XL-mgHG" />
         <param name="K" type="select" label="number of gene combination to be considered" help="Select genome index from the list">
@@ -45,6 +36,7 @@
 		<option value="True" selected="True">True</option>
 		<option value="False">False</option>
 	</param>
+<!--	<param name="nCluster" value="1" help='number ofcluster' type="integer"/>-->
 	<param name="Separator" value="," type="select" help="separator used in count file" >
 		<option value="," selected="True">comma-separated</option>
 		<option value="tab" >tab-separated</option>

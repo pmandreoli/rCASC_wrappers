@@ -1,0 +1,58 @@
+<tool id="PermutationClusteringSeurat" name="PermutationClusteringSeurat">
+	<description>PermutationClustering Seurat function</description>
+	<requirements>
+		<container type="docker">repbioinfo/permutationclusteringseuratv2:1</container>
+	</requirements>
+	<command>
+		<![CDATA[
+			##Rscript example
+			##Rscript main.R annotated_lorenz_testSCumi_mm10 4 2 10 3 4 csv , 0 griph 0 10 1111 
+			####Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",format," ",separator," ",logTen," ",pcaDimensions," ",seed," ",sparse
+
+			ln -s  $matrix /scratch/annotated_matrix.${Format} &&
+
+
+			Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent $Format $Separator $LogTen $pcaDimensions $Seed $sparse &&
+
+			mkdir -p ${html_file.files_path} &&	
+			tar -zcvf zipOutput.tar.gz -C /scratch/ .  &&
+			cp -R /scratch/* ${html_file.extra_files_path} &&
+			tree $html_file.extra_files_path -H .  -T "permutationClustering" -o $html_file
+
+			]]> </command>
+		<inputs>
+			<param format="csv,txt" name="matrix" label="input csv file" type="data" />
+			<param name="NPerm" value="4" help='number of permutations to perform the pValue to evaluate clustering' type="integer"/>
+			<param name="PermAtTime" value="2" type="integer" help="number of permutations that can be computes in parallel" />
+			<param name="Percent" value="10" type="integer" help="percentage of randomly selected cells removed in each permutation" />
+			<param name="Format" type="select" help="matrix format" >
+				<option value="csv" selected="True">csv</option>
+				<option value="txt" >txt</option>
+			</param>
+			<param name="Separator" type="select" help="separator used in count file, e.g. '\\t', ','" >
+				<option value="," selected="True">comma-separated</option>
+				<option value="tab" >tab separated</option>
+			</param>
+			<param name="LogTen" value="0" type="integer" help="1 if the count matrix is already in log10, 0 otherwise" />
+
+			<param name="pcaDimensions" value="15" type="integer" help="pca Dimensions" />
+			<param name="Seed" value="1111" type="integer" help="important value to reproduce the same results with same input" />
+			<param name="sparse" type="select" help="sparse" >
+				<option value="TRUE" selected="True">True</option>
+				<option value="FALSE" >FALSE</option>
+			</param>
+		</inputs>
+		<outputs>
+			<data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
+			<data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
+		</outputs>
+		<stdio>
+			<regex match="Error"
+				source="stderr"
+				level="fatal"
+				description="Unknown error encountered" />
+		</stdio>
+			<help>
+			</help>
+		</tool>
+

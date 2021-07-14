@@ -1,16 +1,14 @@
-<tool id="PermAnalysisGriph" name="PermAnalysisGriph">
-    <description>PermAnalysisGrip</description>
+<tool id="PermAnalysisSIMLR" name="PermAnalysisSIMLR">
+    <description>PermAnalysisSIMLR</description>
     <requirements>
-	    <container type="docker">repbioinfo/permutationanalysisgriphseuratv2:1</container>
+	    <container type="docker">repbioinfo/permutationanalysisv2:1</container>
     </requirements>
     <command>
  <![CDATA[
 
    tar -zxvf $tar_Clustering -C /scratch &&
-
-   NCLUSTER=\$(basename "\$(ls -d /scratch/*/[0-9]*)") ; 
-   export NCLUSTER=\$NCLUSTER ;   
-   Rscript /home/main.R annotated_matrix \${NCLUSTER} $Format $Separator $Sp FALSE 2>>$log &&  
+    Rscript /home/main.R annotated_matrix $Range1 $Range2 $Format $Separator $Sp 0.05 0.01 0.05 2>>$log && 
+	    
    mkdir -p ${html_file.files_path} &&	
    tar -zcvf zipOutput.tar.gz -C /scratch/ . 2>>$log &&
    cp -R /scratch/* ${html_file.extra_files_path} &&
@@ -21,6 +19,8 @@
   ]]> </command>
     <inputs>
 	<param format="tar" name="tar_Clustering" help="input matrix " type="data"/>
+	<param name="Range1" value="3" type="integer" help="to insert" />
+	<param name="Range2" value="4" type="integer" help="to insert" />
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
 		<option value="txt" >txt</option>
