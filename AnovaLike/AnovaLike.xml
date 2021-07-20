@@ -6,8 +6,10 @@
 <command detect_errors="exit_code"><![CDATA[
 	## TODO: Fill in command using Cheetah templates
 	## Hint: Use [ctrl+alt+c] after defining the inputs/outputs to auto-generate some Cheetah boilerplate code for you.
-	Rscript /bin/desc.R $matrix $format $separator $clustering_output $ref_cluster $logCPM_threshold $FDR_threshold  $LogFC_threshold $Plot 
-	&& mv /scratch/* .
+	ln -s $matrix /scratch/matrix.${format} ; 
+	ln -s $clustering_output  /scratch/clustering_output.${format}; 
+
+	Rscript /bin/desc.R matrix $format $separator clustering_output $ref_cluster $logCPM_threshold $FDR_threshold  $LogFC_threshold TRUE && mv /scratch/* . 
 
 ]]></command>
 <inputs>
@@ -17,20 +19,20 @@
 				<option value="txt" >txt</option>
 	</param>
 	<param name="separator" type="select" label="matrix separator" help="TODO">
-		<option value="csv ," selected="True">comma-separated</option>
-		<option value="txt tab" >tab separated</option>
+		<option value="," selected="True">comma-separated</option>
+		<option value="tab" >tab separated</option>
 	</param>
-	<param name="clustering_output" type="data" format="csv" label="clustering_output" help="TODO" />
-	<param name="ref_cluster" type="integer" value="3" label="clusters" help="TODO" />
-	<param name="logCPM_threshold" type="float" min="0" max="10" value="" label="" help="TODO" />
-	<param name="FDR_threshold" type="float" min="0" max="10" value="" label="" help="TODO" />
-	<param name="LogFC_threshold" type="float" min="0" max="10" value="" label="" help="TODO" />
-	<param name="Plot" type="boolean" truevalue="TRUE" falsevalue="FALSE" label="plot result" help="TODO" />
+	<param name="clustering_output" type="data" format="csv" label="clustering_output" help="" />
+	<param name="ref_cluster" type="integer" value="3" label="clusters" help=" a number indicating the cluster to be used a reference for anova-like comparison with the other clusters." />
+	<param name="logCPM_threshold" type="float" min="0" max="10" value="4" label="" help="minimal average abundance" />
+	<param name="FDR_threshold" type="float" min="0" max="10" value="0.05" label="" help="minimal FDR present in at least one of the comparisons with respect to reference covariate" />
+	<param name="LogFC_threshold" type="float" min="0" max="10" value="1" label="" help="minimal logFC present in at least one of the comparisons with respect to reference covariate" />
 </inputs>
 <outputs>
-     <data format="txt" name="DE">
-	    <discover_datasets pattern="__name_and_ext__" directory="."/>>
-    </data>
+	<data name="DE_matrix" from_work_dir="DE_matrix.csv" format="csv" label="${tool.name} on ${on_string}: DE Matrix file" />
+	<data name="filtered_de" from_work_dir="filteredDE.pdf" format= "pdf" label="${tool.name} on ${on_string}: filtered DE PLOT pdf" />
+	<data name="filtered_de_matrix"	from_work_dir="filtered_DE_matrix.csv" format="csv" label="${tool.name} on ${on_string}:filtered de Matrix " />
+	<data name="logFC" from_work_dir="logFC_filtered_DE_matrix.csv"  format="csv" label="${tool.name} on ${on_string}: logFC filtered DE" />
 </outputs>
 <tests>
 </tests>
