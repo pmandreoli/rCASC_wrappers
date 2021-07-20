@@ -1,0 +1,56 @@
+<tool id="AnovaLike" name="AnovaLike" version="2">
+<description>rCASC AnovaLike </description>
+<requirements>
+	<container type="docker">repbioinfo/anovalikev2:1</container>
+</requirements>
+<command detect_errors="exit_code"><![CDATA[
+	## TODO: Fill in command using Cheetah templates
+	## Hint: Use [ctrl+alt+c] after defining the inputs/outputs to auto-generate some Cheetah boilerplate code for you.
+	Rscript /bin/desc.R $matrix $format $separator $clustering_output $ref_cluster $logCPM_threshold $FDR_threshold  $LogFC_threshold $Plot 
+	&& mv /scratch/* .
+
+]]></command>
+<inputs>
+	<param name="matrix" type="data" format="csv" label="count matrix" help="TODO" />
+	<param name="format" type="select" label="select format" help="TODO">
+				<option value="csv" selected="True">csv</option>
+				<option value="txt" >txt</option>
+	</param>
+	<param name="separator" type="select" label="matrix separator" help="TODO">
+		<option value="csv ," selected="True">comma-separated</option>
+		<option value="txt tab" >tab separated</option>
+	</param>
+	<param name="clustering_output" type="data" format="csv" label="clustering_output" help="TODO" />
+	<param name="ref_cluster" type="integer" value="3" label="clusters" help="TODO" />
+	<param name="logCPM_threshold" type="float" min="0" max="10" value="" label="" help="TODO" />
+	<param name="FDR_threshold" type="float" min="0" max="10" value="" label="" help="TODO" />
+	<param name="LogFC_threshold" type="float" min="0" max="10" value="" label="" help="TODO" />
+	<param name="Plot" type="boolean" truevalue="TRUE" falsevalue="FALSE" label="plot result" help="TODO" />
+</inputs>
+<outputs>
+     <data format="txt" name="DE">
+	    <discover_datasets pattern="__name_and_ext__" directory="."/>>
+    </data>
+</outputs>
+<tests>
+</tests>
+<help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+Usage
+.....
+
+
+**Input**
+
+
+**Output**
+
+
+]]></help>
+<citations>
+	<citation type="doi"> </citation>
+</citations>
+</tool>
