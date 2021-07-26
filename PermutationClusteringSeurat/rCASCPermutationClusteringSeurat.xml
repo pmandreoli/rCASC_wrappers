@@ -17,7 +17,15 @@
 			mkdir -p ${html_file.files_path} &&	
 			tar -zcvf zipOutput.tar.gz -C /scratch/ .  &&
 			cp -R /scratch/* ${html_file.extra_files_path} &&
-			tree $html_file.extra_files_path -H .  -T "permutationClustering" -o $html_file
+			tree $html_file.extra_files_path -H .  -T "permutationClustering" -o $html_file ;
+			##### 
+			mkdir outputs;
+			for i in `find "/scratch/annotated_matrix" -name annotated_matrix_clustering.output.${Format}`;
+			do export output_file=\$i; final_path=`echo \$output_file |sed 's/scratch\/annotated_matrix//;s/^.\///;s/\//_/'`; 
+			mv \$output_file outputs/\$final_path; 
+			done;
+
+
 
 			]]> </command>
 		<inputs>
@@ -44,7 +52,9 @@
 		</inputs>
 		<outputs>
 			<data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
-			<data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
+			<data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}">
+				<discover_datasets  format="input" pattern="__designation_and_ext__" directory="outputs" visible="true" />
+			</data>
 		</outputs>
 		<stdio>
 			<regex match="Error"
