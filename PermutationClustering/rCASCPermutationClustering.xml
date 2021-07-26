@@ -11,9 +11,9 @@
 
                         #if $clustering_type.Clustering!='griph'
 
-			Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent $clustering_type.Range1 $clustering_type.Range2 $Format $Separator $LogTen $clustering_type.Clustering $Rk $Perplexity $Seed &&
+			Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent $clustering_type.Range1 $clustering_type.Range2 $Format $Separator $LogTen $clustering_type.Clustering 0 $Perplexity $Seed &&
 			#else
-			Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent null null $Format $Separator $LogTen $clustering_type.Clustering $Rk $Perplexity $Seed &&
+			Rscript /home/main.R annotated_matrix $NPerm $PermAtTime $Percent null null $Format $Separator $LogTen $clustering_type.Clustering 0 $Perplexity $Seed &&
 			#end if
 			mkdir -p ${html_file.files_path} &&	
 			tar -zcvf zipOutput.tar.gz -C /scratch/ .  &&
@@ -26,10 +26,6 @@
 			<param name="NPerm" value="4" help='number of permutations to perform the pValue to evaluate clustering' type="integer"/>
 			<param name="PermAtTime" value="2" type="integer" help="number of permutations that can be computes in parallel" />
 			<param name="Percent" value="10" type="integer" help="percentage of randomly selected cells removed in each permutation" />
-			<param name="Rk" value="0" type="select" help="1 for rankGene algorithm 0 otherwise WARNING, very slow with this feature. This parameter is specific for SIMLR. Setting this parameter to 1 with other clustering methods will not give any different result to set the parameter to 0." >
-				<option value="0" selected="True">0</option>
-				<option value="1">1</option>
-			</param>
 			<param name="Format" type="select" help="matrix format" >
 				<option value="csv" selected="True">csv</option>
 				<option value="txt" >txt</option>
@@ -43,7 +39,7 @@
 			<param name="Clustering"  type="select" help="clustering method to use : SIMLR , tSne or griph" > 
 				<option value="griph" selected="True">griph</option>
 				<option value="SIMLR">SIMLR</option>
-				<option value="tSne">tSne</option>
+				<option value="tSne">kmeans+tsne</option>
 			</param>
 		        <when value="SIMLR">
 			<param name="Range1" value="3" type="integer" help="first number of cluster for k means algorithm" />

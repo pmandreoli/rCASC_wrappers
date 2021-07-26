@@ -1,4 +1,4 @@
-<tool id="SCanonByGtf" name="SCanonByGtf (in docker)">
+<tool id="SCanonByGtf" name="SCanonByGtf">
     <description>SCanonByGtf</description>
     <requirements>
 	    <container type="docker">repbioinfo/scannobygtfv2:1</container>
@@ -20,7 +20,7 @@
 
   ]]> </command>
     <inputs>
-	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
+	    <param format="csv,txt" name="matrix" label="input .csv|.txt  file" type="data" />
 	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
 	<param name="format" value="csv" type="select">
 		<option value="txt">txt</option>
@@ -53,6 +53,7 @@
            description="Unknown error encountered" />
     </stdio>
     <help>
+	    **IMPORTANT**: if the output has only 1 line check the gtf in input
     </help>
 </tool>
 

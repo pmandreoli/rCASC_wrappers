@@ -38,8 +38,8 @@
 			<param name="pcaDimensions" value="15" type="integer" help="pca Dimensions" />
 			<param name="Seed" value="1111" type="integer" help="important value to reproduce the same results with same input" />
 			<param name="sparse" type="select" help="sparse" >
-				<option value="TRUE" selected="True">True</option>
-				<option value="FALSE" >FALSE</option>
+				<option value="TRUE" >True</option>
+				<option value="FALSE" selected="True">FALSE</option>
 			</param>
 		</inputs>
 		<outputs>
