@@ -1,5 +1,5 @@
 <tool id="PermAnalysisGriph" name="PermAnalysisGriph">
-    <description>PermAnalysisGrip-Seurat</description>
+    <description>PermAnalysisGriph-Seurat</description>
     <requirements>
 	    <container type="docker">repbioinfo/permutationanalysisgriphseuratv2:1</container>
     </requirements>

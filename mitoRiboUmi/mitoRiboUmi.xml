@@ -34,7 +34,7 @@
 	<expand macro="biotype_menu"/>
     </inputs>
     <outputs>
-        <data name="output" format="pdf" label="${tool.name} on ${on_string}: PDF FILE download and see it using your default pdf-viewer"  />
+        <data name="output" format="pdf" label="${tool.name} on ${on_string}"  />
     </outputs>
     <stdio>
     <regex match="low space"

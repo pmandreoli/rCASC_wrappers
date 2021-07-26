@@ -42,7 +42,7 @@
     </inputs>
     <outputs>
         <data name="gene_pdf" format="pdf" label="${tool.name} on ${on_string}:pdf file"/>
-        <data name="filtered" format="txt" label="${tool.name} on file"/>
+	<data name="filtered" format="txt" label="${tool.name} on ${on_string}: filtered"/>
     </outputs>
     <stdio>
     <regex match="Error"
