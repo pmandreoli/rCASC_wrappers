@@ -37,13 +37,13 @@
 		<option value="3" >3</option>
 		<option value="4" >4</option>
 	</param>
-        <param name="counts" type="select" label="if set to True it will graph the log(expression+1">
+        <param name="counts" type="select" label="Set to true if are raw count, not normalized">
 		<option value="True" selected="True">True</option>
 		<option value="False">False</option>
 	</param>
-        <param name="skipvis" type="select" label="if set to True it will graph the log(expression+1">
-		<option value="True" selected="True">True</option>
-		<option value="False">False</option>
+        <param name="skipvis" type="select" label="skip visualizzation">
+		<option value="True" >True</option>
+		<option value="False" selected="True">False</option>
 	</param>
 	<param name="Separator" value="," type="select" help="separator used in count file" >
 		<option value="," selected="True">comma-separated</option>
