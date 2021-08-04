@@ -1,6 +1,6 @@
 <macros>
 	<macro name="biotype_menu">
-		<param name="biotype" type="select">
+		<param name="biotype" type="select" help="ENSEMBL biotype of interest, default for single-cell protein_coding">
 			<option value="protein_coding" selected="true">protein_coding</option> 
 			<option value="unitary_pseudogene">unitary_pseudogene</option>
 			<option value="unprocessed_pseudogene">unprocessed_pseudogene</option>

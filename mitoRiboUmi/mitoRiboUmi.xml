@@ -20,7 +20,7 @@
 
   ]]> </command>
     <inputs>
-	<param format="csv,txt" name="input" label="Input matrix file" type="data" />
+	<param format="csv,txt" name="input" label="Input matrix file" type="data" help="count matrix" />
 	<param format="gtf" name="input_gtf" label="ENSEMBLE gtf file" type="data" />
 	<param name="format" help="matrix format" value="csv" type="select">
 		<option value="csv" selected="True">csv</option>
@@ -43,6 +43,7 @@
            description="Low space on device" />
     </stdio>
     <help>
+	    mitoriboumi plots the cells according to the number of significative genes, mitochondrial and ribosomal genes percentage.
     </help>
 </tool>
 

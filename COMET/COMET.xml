@@ -1,5 +1,5 @@
 <tool id="COMET" name="COMET">
-    <description>COMET</description>
+    <description>COMET evaluate which are the most important features (genes) for each cluster </description>
     <requirements>
 	    <container type="docker">repbioinfo/cometscv2:v2</container>
     </requirements>
@@ -24,15 +24,15 @@
   ]]> </command>
     <inputs>
 	
-	<param format="csv,txt" name="matrix" label="input csv file" type="data" />
+	<param format="csv,txt" name="matrix" label="input csv file" type="data" help="count matrix" />
 	<param format="csv,txt" name="clustering_file" label="input clustering file from permanalysis" type="data" />
 	<param name="Format" type="select" help="matrix format" >
 		<option value="csv" selected="True">csv</option>
 		<option value="txt" >txt</option>
 	</param>
-	<param name="threads" value="1" help='number of cores to use in this machine' type="integer"/>
-	<param name="X" value="0.15" type="float" help="argument for XL-mgHG" />
-        <param name="K" type="select" label="number of gene combination to be considered" help="Select genome index from the list">
+	<param name="threads" min="1" max="12" value="1" help='number of cores to use in this machine' type="integer"/>
+	<param name="X" min="0" max="1" value="0.15" type="float" help="argument for XL-mgHG" />
+        <param name="K" type="select" label="number of gene combination to be considered: possible values 2, 3, 4" help="WARNING increasing the number of combinations makes the matrices very big">
 		<option value="2" selected="True">2</option>
 		<option value="3" >3</option>
 		<option value="4" >4</option>
@@ -56,5 +56,12 @@
         <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
     </outputs>
     <help>
+	    evaluate which are the most important features (genes) for each cluster.
+
+	    This function require the count matrix used to evaluate the clusters and the file clustering.output generated from the clustering algorithm. For each clusters this function return a picture and a list of genes. 
+
+
+
+
     </help>
 </tool>

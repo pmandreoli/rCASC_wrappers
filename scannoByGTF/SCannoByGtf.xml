@@ -1,5 +1,5 @@
 <tool id="SCanonByGtf" name="SCanonByGtf">
-    <description>SCanonByGtf</description>
+	<description>SCanonByGtf returns the input matrix annotated with the gitf files provided to the function and the same annotated matrix but filtered according to the percentage of mitochondrial and ribosomal genes.</description>
     <requirements>
 	    <container type="docker">repbioinfo/scannobygtfv2:1</container>
     </requirements>
@@ -20,27 +20,27 @@
 
   ]]> </command>
     <inputs>
-	    <param format="csv,txt" name="matrix" label="input .csv|.txt  file" type="data" />
-	<param format="gtf" name="gtf_file" label="input gtf file" type="data" />
+	    <param format="csv,txt" name="matrix" label="input .csv|.txt  file" type="data" help="count matrix"/>
+	<param format="gtf" name="gtf_file" label="input gtf file" type="data" help="ENSEMBLE gtf file"/>
 	<param name="format" value="csv" type="select">
 		<option value="txt">txt</option>
 		<option value="csv" selected="true">csv</option> 
 	</param>
 	<expand macro="biotype_menu"/>
-	<param name="mt" type="select">
+	<param name="mt" type="select" help="a boolean to define if mitocondrial genes have to be removed, FALSE mean that mt genes are removed">
 		<option value="FALSE">FALSE</option>
 		<option value="TRUE" selected="true">TRUE</option> 
 	</param>
-	<param name="ribo_proteins" type="select">
+	<param name="ribo_proteins" type="select" help="a boolean to define if ribosomal proteins have to be removed, FALSE mean that ribosomal proteins (gene names starting with rpl or rps) are removed">
 		<option value="FALSE">FALSE</option>
 		<option value="TRUE" selected="true">TRUE</option> 
 	</param>
-	<param name="R1" value="0" type="integer"/>
-	<param name="R2" value="100" type="integer"/>
-	<param name="R3" value="0" type="integer"/>
-	<param name="R4" value="100" type="integer"/>
-	<param name="umiXgene" value="3" type="integer"/>
-	<param name="thresholdGenes" value="250" type="integer"/>
+	<param name="R1" min="0" max="100" value="0" type="integer" help="start range for ribosomal percentage, cells within the range are kept" label="riboStart.percentage"/>
+	<param name="R2" min="0" max="100" value="100" type="integer" help="end range for ribosomal percentagem cells within the range are kept" label="riboEnd.percentage"/>
+	<param name="R3" min="0" max="100" value="0" type="integer" help="start range for mitochondrial percentage, cells within the range are retained" label="mitoStart.percentage"/>
+	<param name="R4" min="0" max="100" value="100" type="integer" help="end range for mitochondrial percentage, cells within the range are retained" label="mitoEnd.percentage"/>
+	<param name="umiXgene" value="3" type="integer" help="integer defining how many UMI are required to call a gene as present. default: 3"/>
+	<param name="thresholdGenes" value="250" type="integer" help="parameter to filter cells according to the number og significative genes expressed"/>
     </inputs>
     <outputs>
 	<data name="filtered" format="tabular" label="${tool.name} on ${on_string}:filtered"/>
@@ -53,6 +53,8 @@
            description="Unknown error encountered" />
     </stdio>
     <help>
+	    returns the input matrix annotated with the gitf files provided to the function and the same annotated matrix but filtered according to the percentage of mitochondrial and ribosomal genes. 
+
 	    **IMPORTANT**: if the output has only 1 line check the gtf in input
     </help>
 </tool>

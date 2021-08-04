@@ -20,8 +20,8 @@
  
   ]]> </command>
     <inputs>
-	<param format="tar" name="tar_Clustering" help="input matrix " type="data"/>
-	<param name="Format" type="select" help="matrix format" >
+	<param format="tar" name="tar_Clustering" help="Tar that comes out from permutationClustering GRIPH or Seurat" type="data"/>
+	<param name="Format" type="select" help="matrix format, txt or csv" >
 		<option value="csv" selected="True">csv</option>
 		<option value="txt" >txt</option>
 	</param>
@@ -29,7 +29,7 @@
 		<option value="," selected="True">comma-separated</option>
 		<option value="tab" >tab-separated</option>
 	</param>
-	<param name="Sp" value="0.8" type="float" help="to insert" />
+	<param name="Sp" value="0.8" type="float" help="minimun number of percentage of cells that has to be in common between two permutation to be the same cluster" />
     </inputs>
     <outputs>
         <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>
@@ -37,5 +37,9 @@
         <data name="zipOutput" format="tar" from_work_dir="zipOutput.tar.gz" label="${tool.name} on ${on_string}:tar"/>
     </outputs>
     <help>
+	    permutationAnalysisGriph perform the statistic evaluation assigning a cell stability score to each cell.
+
+            **IMPORTANT**
+	    This function works on hierarchical clustering algorithm such as Seurat and Griph.
     </help>
 </tool>

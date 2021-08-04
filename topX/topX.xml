@@ -1,5 +1,5 @@
 <tool id="topX" name="topX">
-    <description>topX</description>
+    <description>topX return the input matrix filtered according to variance or expressions</description>
     <requirements>
 	    <container type="docker">repbioinfo/topxv2:1</container>
     </requirements>
@@ -51,6 +51,9 @@
            description="Unknown error encountered" />
     </stdio>
     <help>
+	   
+	   return the input matrix filtered according to variance or expressions
+
     </help>
 </tool>
 

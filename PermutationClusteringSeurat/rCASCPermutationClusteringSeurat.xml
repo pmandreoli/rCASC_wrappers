@@ -63,6 +63,8 @@
 				description="Unknown error encountered" />
 		</stdio>
 			<help>
+				permutationClusteringSeurat perform clustering with Seurat bootstrapping the dataset.
+				This function return different files related to the bootstrap and the clustering.output file, important for most of the rCASC analysis
 			</help>
 		</tool>
 
