@@ -1,0 +1,8 @@
+<tables>
+<!-- Location of index file CellRangerCount wrapper -->
+    <table name="rcasc_gtf" comment_char="#">
+        <columns> value, dbkey, name, path</columns>
+        <file path="tool-data/rcasc_gtf.loc" />
+    </table>
+</tables>
+

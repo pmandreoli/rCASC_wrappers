@@ -10,8 +10,14 @@
  <![CDATA[
 	
       ln -s  $matrix /data/scratch/matrix.${format} &&
-      ln -s  $gtf_file /data/scratch/file_gtf.gtf &&
-      ##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
+
+         #if str($reference_gtf.source) == "history":
+		    ln -s  $reference_gtf.own_file /data/scratch/file_gtf.gtf  &&
+         #else:
+	 ln -s  $reference_gtf.gtf.fields.path /data/scratch/file_gtf.gtf  &&
+         #end if
+		    
+		 ##Rscript scannoByGtf.R Buettner.csv Mus_musculus.GRCm38.92.gtf protein_coding TRUE TRUE csv 0 100 0 100 3 250 
      Rscript  /bin/.scannoByGtf.R  matrix.${format} file_gtf.gtf $biotype $mt $ribo_proteins $format $R1 $R2 $R3 $R4 $umiXgene $thresholdGenes && 
 
        mv  /data/scratch/filtered* $filtered &&  mv /data/scratch/annotated* $annotated
@@ -21,7 +27,23 @@
   ]]> </command>
     <inputs>
 	    <param format="csv,txt" name="matrix" label="input .csv|.txt  file" type="data" help="count matrix"/>
-	<param format="gtf" name="gtf_file" label="input gtf file" type="data" help="ENSEMBLE gtf file"/>
+        <conditional name="reference_gtf">
+          <param name="source" type="select" label="Will you select a ensembl gtf from your history or use a built-in gtf?" help="Built-ins were downloaded from ensembl ftp at https://www.ensembl.org/info/data/ftp/index.html">
+            <option value="local_gtf">Use a built-in gtf</option>
+            <option value="history">Use a gtf from the history </option>
+    </param>
+          <when value="local_gtf">
+            <param name="gtf" type="select" label="Select Build-in gtf">
+              <options from_data_table="rcasc_gtf">
+                <filter type="sort_by" column="2"/>
+                <validator type="no_options" message="No gtfs are available for the selected input dataset"/>
+              </options>
+            </param>
+          </when>
+          <when value="history">
+            <param name="own_file" type="data" format="gtf" label="Select ensembl gtf" />
+          </when>
+        </conditional>
 	<param name="format" value="csv" type="select">
 		<option value="txt">txt</option>
 		<option value="csv" selected="true">csv</option> 

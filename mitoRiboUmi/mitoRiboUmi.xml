@@ -10,8 +10,12 @@
  <![CDATA[
 
 	 ln -s  $input /scratch/matrix.${format}  &&
-	 ln -s  $input_gtf /scratch/file.gtf  &&
-####Rscript /home/main.R Buettner csv , Mus_musculus.GRCm38.95.gtf protein_coding 3 
+         #if str($reference_gtf.source) == "history":
+	 ln -s  $reference_gtf.own_file /scratch/file.gtf  &&
+         #else:
+	 ln -s  $reference_gtf.gtf.fields.path /scratch/file.gtf  &&
+         #end if
+         ####Rscript /home/main.R Buettner csv , Mus_musculus.GRCm38.95.gtf protein_coding 3 
 	 Rscript $__tool_directory__/main.R  matrix $format $Separator file.gtf $biotype $umiXgene 
 	 &&
 	 mv /scratch/Ribo_mito.pdf $output
@@ -21,7 +25,23 @@
   ]]> </command>
     <inputs>
 	<param format="csv,txt" name="input" label="Input matrix file" type="data" help="count matrix" />
-	<param format="gtf" name="input_gtf" label="ENSEMBLE gtf file" type="data" />
+        <conditional name="reference_gtf">
+          <param name="source" type="select" label="Will you select a ensembl gtf from your history or use a built-in gtf?" help="Built-ins were downloaded from ensembl ftp at https://www.ensembl.org/info/data/ftp/index.html">
+            <option value="local_gtf">Use a built-in gtf</option>
+            <option value="history">Use a gtf from the history </option>
+    </param>
+          <when value="local_gtf">
+            <param name="gtf" type="select" label="Select Build-in gtf">
+              <options from_data_table="rcasc_gtf">
+                <filter type="sort_by" column="2"/>
+                <validator type="no_options" message="No gtfs are available for the selected input dataset"/>
+              </options>
+            </param>
+          </when>
+          <when value="history">
+            <param name="own_file" type="data" format="gtf" label="Select ensembl gtf" />
+          </when>
+        </conditional>
 	<param name="format" help="matrix format" value="csv" type="select">
 		<option value="csv" selected="True">csv</option>
 		<option value="txt">txt</option>
