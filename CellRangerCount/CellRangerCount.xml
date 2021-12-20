@@ -9,22 +9,21 @@
 
 			tar -xvf $fastqs -C /opt &&  
 
-			/bin/cellranger count --id=$Id --transcriptome=$ref_file.fields.path --fastqs=/opt --localcores=$Cores --localmem=$RAM &&
+			/bin/cellranger count --id=fastqfile --transcriptome=$ref_file.fields.path --fastqs=/opt --localcores=$Cores --localmem=$RAM &&
 
 			/bin/cellranger mat2csv $Id/outs/filtered_feature_bc_matrix  $matrix
 
 			]]> </command>
 		<inputs>
 			<param name="fastqs" help="fastqs"  type="data" label="fastq collection"/>
-			<param name="Id" help="JOB id" value="example" type="text" label="JOB id name"/>
 			<param name="Cores" min="1" max="12" value="8"  help='number of cores to use in this machine' type="integer"/>
 			<param name="RAM" min="2" max="125" value="12" type="integer" help="RAM quantity to use" />
-			<param name="ref_file" type="select" label="Using indexed reference genome" help="Select genome index from the list">
+			<param name="ref_file" type="select" label="Using indexed reference transcriptome" help="Select transcriptome from the list">
 				<options from_data_table="CellRangerCountIndex">
 					<filter type="sort_by" column="2" />
 					<validator type="no_options" message="No indexes are available" />
 				</options>
-				<validator type="no_options" message="A built-in reference genome is not available for the build associated with the selected input file"/>
+				<validator type="no_options" message="A built-in reference transcriptome is not available for the build associated with the selected input file"/>
 			</param>
 		</inputs>
 		<outputs>
