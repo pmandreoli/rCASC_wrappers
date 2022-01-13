@@ -30,9 +30,9 @@
 		<option value="," selected="True">comma-separated</option>
 		<option value="tab" >tab-separated</option>
 	</param>
-	<param name="logged" type="select" help="boolean TRUE or FALSE, if FALSE gene expression data are log10 transformed before being plotted" >
-		<option value="FALSE" selected="true">FALSE</option>
-		<option value="TRUE" >TRUE</option> 
+	<param name="logged" type="select" help="this value must be set to false only if the values in the count matrix had been log10 transformed" label="raw count" >
+		<option value="FALSE" selected="true">TRUE</option>
+		<option value="TRUE" >FALSE</option> 
 	</param>
 	<param name="threshold" value="10000" type="integer" help="integer used for filtering indicate the number of top expressed/vaying genes to be selected" />
 	<param name="type" type="select" help="expression refers to the selection of the top expressed genes, variance to the the selection of the top variable genes">

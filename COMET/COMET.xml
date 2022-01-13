@@ -37,7 +37,7 @@
 		<option value="3" >3</option>
 		<option value="4" >4</option>
 	</param>
-        <param name="counts" type="select" label="Set to true if are raw count, not normalized">
+        <param name="counts" type="select" label="raw count" help="this value must be set to false only if the values in the count matrix had been log10 transformed" >
 		<option value="True" selected="True">True</option>
 		<option value="False">False</option>
 	</param>

@@ -41,7 +41,10 @@
 				<option value="," selected="True">comma-separated</option>
 				<option value="tab" >tab separated</option>
 			</param>
-			<param name="LogTen" value="0" type="integer" help="1 if the count matrix is already in log10, 0 otherwise" />
+	                <param name="LogTen" type="select" help="this value must be set to false only if the values in the count matrix had been log10 transformed" label="raw count" >
+		               <option value="0" selected="true">TRUE</option>
+		               <option value="1" >FALSE</option> 
+	                </param>
 		        <conditional name="clustering_type">
 			<param name="Clustering"  type="select" help="clustering method to use : SIMLR , tSne or griph" > 
 				<option value="griph" selected="True">griph</option>
