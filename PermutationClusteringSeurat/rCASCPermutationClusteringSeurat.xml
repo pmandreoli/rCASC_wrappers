@@ -30,8 +30,8 @@
 			]]> </command>
 		<inputs>
 			<param format="csv,txt" name="matrix" label="input csv file" type="data" />
-			<param name="NPerm" value="4" help='number of permutations to perform the pValue to evaluate clustering' type="integer"/>
-			<param name="PermAtTime" value="2" type="integer" help="number of permutations that can be computes in parallel" />
+			<param name="NPerm" value="40" help='number of permutations to perform' type="integer"/>
+			<param name="PermAtTime" value="2" type="integer" help="number of permutations to compute in parallel" />
 			<param name="Percent" value="10" type="integer" help="percentage of randomly selected cells removed in each permutation" />
 			<param name="Format" type="select" help="matrix format" >
 				<option value="csv" selected="True">csv</option>

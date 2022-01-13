@@ -62,7 +62,7 @@
 	<param name="R3" min="0" max="100" value="0" type="integer" help="start range for mitochondrial percentage, cells within the range are retained" label="mitoStart.percentage"/>
 	<param name="R4" min="0" max="100" value="100" type="integer" help="end range for mitochondrial percentage, cells within the range are retained" label="mitoEnd.percentage"/>
 	<param name="umiXgene" value="3" type="integer" help="integer defining how many UMI are required to call a gene as present. default: 3"/>
-	<param name="thresholdGenes" value="250" type="integer" help="parameter to filter cells according to the number og significative genes expressed"/>
+	<param name="thresholdGenes" value="250" type="integer" help="parameter to filter cells according to the number of expressed genes"/>
     </inputs>
     <outputs>
 	<data name="filtered" format="tabular" label="${tool.name} on ${on_string}:filtered"/>
@@ -75,7 +75,7 @@
            description="Unknown error encountered" />
     </stdio>
     <help>
-	    returns the input matrix annotated with the gitf files provided to the function and the same annotated matrix but filtered according to the percentage of mitochondrial and ribosomal genes. 
+	    Returns the input matrix annotated using the GTF file in input, and the same annotated matrix filtered according to the percentage of mitochondrial and ribosomal genes. 
 
 	    **IMPORTANT**: if the output has only 1 line check the gtf in input
     </help>

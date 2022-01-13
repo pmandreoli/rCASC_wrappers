@@ -31,7 +31,7 @@
             <option value="history">Use a gtf from the history </option>
     </param>
           <when value="local_gtf">
-            <param name="gtf" type="select" label="Select Build-in gtf">
+            <param name="gtf" type="select" label="Select built-in gtf">
               <options from_data_table="rcasc_gtf">
                 <filter type="sort_by" column="2"/>
                 <validator type="no_options" message="No gtfs are available for the selected input dataset"/>
@@ -50,7 +50,7 @@
 		<option value="," selected="True">comma-separated</option>
 		<option value="tab" >tab-separated</option>
 	</param>
-	<param name="umiXgene" help="a integer defining how many UMI are required to call a gene as present" value="3" type="integer" />
+	<param name="umiXgene" help="a integer defining how many UMIs are required to call a gene as expressed" value="3" type="integer" />
 	<expand macro="biotype_menu"/>
     </inputs>
     <outputs>

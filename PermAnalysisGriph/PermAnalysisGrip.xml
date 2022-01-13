@@ -29,7 +29,7 @@
 		<option value="," selected="True">comma-separated</option>
 		<option value="tab" >tab-separated</option>
 	</param>
-	<param name="Sp" value="0.8" type="float" help="minimun number of percentage of cells that has to be in common between two permutation to be the same cluster" />
+	<param name="Sp" value="0.8" type="float" help="minimun fraction of cells that has to be in common between two permutation for two clusters to be considered the same" />
     </inputs>
     <outputs>
         <data name="html_file" format="html" label="${tool.name} on ${on_string}:html-file"/>

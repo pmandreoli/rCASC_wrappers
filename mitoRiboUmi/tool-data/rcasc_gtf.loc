@@ -1,4 +1,4 @@
 ##Assembly,dbkey,name,path
-#mm10	mm10	mm10-index	/home/galaxy/galaxy/rcascv2/reference_data/refdata-gex-mm10-2020-A/
+mm10	mm10	mm10-gtf	/home/galaxy/galaxy/rcascv2/reference_data/rcasc_gtf/Mus_musculus.GRCm38.102.gtf
 hg38	hg38	hg38-gtf	/home/galaxy/galaxy/rcascv2/reference_data/rcasc_gtf/Homo_sapiens.GRCh38.104.gtf
 
